@@ -1,0 +1,7 @@
+{
+  "name": "munsens-prototipo-v1",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
