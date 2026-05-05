@@ -36,6 +36,11 @@ export const routes: Routes = [
           import('./pages/tabs-nina/tracker/tracker.page').then((m) => m.NinaTrackerPage),
       },
       {
+        path: 'registro',
+        loadComponent: () =>
+          import('./pages/tabs-nina/registro/registro.page').then((m) => m.NinaRegistroPage),
+      },
+      {
         path: 'learn',
         loadComponent: () =>
           import('./pages/tabs-nina/learn/learn.page').then((m) => m.NinaLearnPage),

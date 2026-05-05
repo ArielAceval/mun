@@ -1,0 +1,196 @@
+ion-header ion-toolbar {
+  --background: #fdfaf5;
+  --border-color: transparent;
+  box-shadow: none;
+}
+
+.mun-logo-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  color: #9b8ec4;
+  font-weight: 700;
+  text-align: center;
+}
+
+.notif-btn { position: relative; }
+
+.notif-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: #e8909f;
+  color: #fff;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  font-size: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  pointer-events: none;
+}
+
+.registro-wrapper {
+  padding: 16px 20px;
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #2c3e7d;
+  margin: 0 0 20px;
+  letter-spacing: 0.5px;
+}
+
+// ===== CALENDARIO =====
+
+.week-calendar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.day-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.day-label {
+  font-size: 11px;
+  color: #999;
+}
+
+.day-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: #555;
+  border: 1px solid #ddd;
+  font-weight: 500;
+
+  &.day-today {
+    background: #e8909f;
+    color: #fff;
+    border: none;
+  }
+}
+
+// ===== RUEDA =====
+
+.wheel-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 12px 0 20px;
+}
+
+.wheel {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ring {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.ring-5 {
+  width: 280px;
+  height: 280px;
+  background: #c8b8e8;
+}
+
+.ring-4 {
+  width: 220px;
+  height: 220px;
+  background: #f5c5d0;
+}
+
+.ring-3 {
+  width: 168px;
+  height: 168px;
+  background: #b8e0d8;
+}
+
+.ring-2 {
+  width: 116px;
+  height: 116px;
+  background: #f5e8b0;
+}
+
+.ring-center {
+  width: 70px;
+  height: 70px;
+  background: #fdfaf5;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wheel-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 8px;
+  color: #2c3e7d;
+  text-align: center;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+// ===== PÉTALOS =====
+
+.petal-wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  transform-origin: 0 0;
+}
+
+.petal-icon {
+  position: absolute;
+  font-size: 14px;
+  transform: translate(-50%, -118px);
+  display: block;
+}
+
+// ===== MUNI =====
+
+.muni-float {
+  position: absolute;
+  bottom: 80px;
+  left: 16px;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.muni-img {
+  width: 70px;
+  object-fit: contain;
+}
+
+.muni-bubble {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 8px 12px;
+  font-size: 12px;
+  color: #555;
+  max-width: 150px;
+  margin-bottom: 8px;
+}

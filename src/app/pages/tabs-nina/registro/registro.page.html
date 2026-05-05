@@ -1,0 +1,63 @@
+<ion-header [translucent]="false">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button>
+        <ion-icon name="menu-outline" style="color:#2c3e7d;font-size:22px;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="mun-logo-title">MUN</ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="notif-btn">
+        <ion-icon name="notifications-outline" style="color:#2c3e7d;font-size:22px;"></ion-icon>
+        <span class="notif-badge">1</span>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" style="--background:#fdfaf5;">
+  <div class="registro-wrapper">
+
+    <h1 class="page-title">REGISTRO DE HOY</h1>
+
+    <!-- Calendario semanal compacto -->
+    <div class="week-calendar">
+      <div class="day-col" *ngFor="let d of days">
+        <span class="day-label">{{ d.label }}</span>
+        <div class="day-circle" [ngClass]="getDayClass(d.num)">{{ d.num }}</div>
+      </div>
+    </div>
+
+    <!-- Rueda Huella Dactilar del Dolor -->
+    <div class="wheel-wrap">
+      <div class="wheel">
+        <!-- Anillos de afuera hacia adentro -->
+        <div class="ring ring-5"></div>
+        <div class="ring ring-4"></div>
+        <div class="ring ring-3"></div>
+        <div class="ring ring-2"></div>
+        <div class="ring ring-center">
+          <div class="wheel-text">
+            <span>HUELLA</span>
+            <span>DACTILAR</span>
+            <span>DEL DOLOR</span>
+          </div>
+        </div>
+        <!-- Pétalos en el anillo exterior -->
+        <div *ngFor="let angle of petalAngles"
+             class="petal-wrap"
+             [style.transform]="'rotate(' + angle + 'deg)'">
+          <span class="petal-icon" [style.transform]="'rotate(' + (-angle) + 'deg)'">🌸</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MUNI flotante -->
+  <div slot="fixed" class="muni-float">
+    <img src="assets/avatars/muni-avatar.png" class="muni-img" alt="Muni"/>
+    <div class="muni-bubble">¿Cómo te sientes hoy?</div>
+  </div>
+
+</ion-content>

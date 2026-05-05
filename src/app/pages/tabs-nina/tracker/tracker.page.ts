@@ -1,55 +1,48 @@
 import { Component } from '@angular/core';
-import { IonContent, IonGrid, IonRow, IonCol } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
+import {
+  IonContent, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon,
+} from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { menuOutline, notificationsOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-nina-tracker',
   templateUrl: 'tracker.page.html',
   styleUrls: ['tracker.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonContent, IonGrid, IonRow, IonCol],
+  imports: [CommonModule, IonContent, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon],
 })
 export class NinaTrackerPage {
-  selectedMoods: string[] = [];
-  selectedSymptoms: string[] = [];
-  showSaved = false;
+  selectedPains: string[] = [];
+  dolorLevel = '';
 
-  moods = [
-    { emoji: '😊', label: 'Feliz', color: '#FFE5B4' },
-    { emoji: '😔', label: 'Triste', color: '#B4D4FF' },
-    { emoji: '😰', label: 'Ansiosa', color: '#FFE5F5' },
-    { emoji: '😌', label: 'Tranquila', color: '#D4FFE5' },
-    { emoji: '😤', label: 'Frustrada', color: '#FFD4D4' },
-    { emoji: '😴', label: 'Cansada', color: '#E5D4FF' },
+  painTypes = [
+    { emoji: '💉', label: 'Pinchazos', fondo: '#fff0f5' },
+    { emoji: '🪨', label: 'Presión', fondo: '#f5f5f5' },
+    { emoji: '🌀', label: 'Retorcijones', fondo: '#fff5f0' },
+    { emoji: '🔥', label: 'Como fuego', fondo: '#fff8f0' },
   ];
 
-  sensorySymptoms = [
-    { emoji: '🤕', label: 'Dolor de Cabeza', color: '#FFE5F5' },
-    { emoji: '💢', label: 'Cólicos', color: '#FFD4D4' },
-    { emoji: '🌊', label: 'Hinchazón', color: '#B4D4FF' },
-    { emoji: '🍽️', label: 'Apetito', color: '#FFE5B4' },
-    { emoji: '🎧', label: 'Sonido', color: '#FFE5D4' },
-    { emoji: '💡', label: 'Luz', color: '#FFF9E5' },
-  ];
+  dolorLevels = ['😊', '😐', '😟', '😢'];
 
-  toggleMood(label: string) {
-    if (this.selectedMoods.includes(label)) {
-      this.selectedMoods = this.selectedMoods.filter(m => m !== label);
-    } else {
-      this.selectedMoods.push(label);
-    }
+  constructor() {
+    addIcons({ menuOutline, notificationsOutline });
   }
 
-  toggleSymptom(label: string) {
-    if (this.selectedSymptoms.includes(label)) {
-      this.selectedSymptoms = this.selectedSymptoms.filter(s => s !== label);
-    } else {
-      this.selectedSymptoms.push(label);
-    }
+  togglePain(pain: string) {
+    const idx = this.selectedPains.indexOf(pain);
+    if (idx === -1) this.selectedPains.push(pain); else this.selectedPains.splice(idx, 1);
   }
 
-  handleSave() {
-    this.showSaved = true;
-    setTimeout(() => this.showSaved = false, 2000);
+  selectDolorLevel(level: string) {
+    this.dolorLevel = level;
+  }
+
+  guardar() {
+    localStorage.setItem('mun_tracker_dolor', JSON.stringify({
+      pains: this.selectedPains,
+      nivel: this.dolorLevel,
+    }));
   }
 }
