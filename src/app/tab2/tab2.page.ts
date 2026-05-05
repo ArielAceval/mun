@@ -1,18 +1,13 @@
 import { Component } from '@angular/core';
-import { 
-  IonContent, IonHeader, IonToolbar, IonTitle, 
-  IonButton, IonIcon, IonGrid, IonRow, IonCol 
-} from '@ionic/angular/standalone';
+import { IonContent, IonGrid, IonRow, IonCol } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
-import { addIcons } from 'ionicons';
-import { chevronBackOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonContent, IonHeader, IonToolbar, IonTitle, IonButton, IonIcon, IonGrid, IonRow, IonCol]
+  imports: [CommonModule, IonContent, IonGrid, IonRow, IonCol]
 })
 export class Tab2Page {
   selectedMoods: string[] = [];
@@ -36,10 +31,6 @@ export class Tab2Page {
     { emoji: '🎧', label: 'Sonido', color: '#FFE5D4' },
     { emoji: '💡', label: 'Luz', color: '#FFF9E5' },
   ];
-
-  constructor() {
-    addIcons({ chevronBackOutline });
-  }
 
   toggleMood(label: string) {
     if (this.selectedMoods.includes(label)) {
