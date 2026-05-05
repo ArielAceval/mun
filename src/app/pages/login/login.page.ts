@@ -43,7 +43,7 @@ export class LoginPage {
       }
       // Modo demo: entra con el rol seleccionado en pantalla
       localStorage.setItem('mun_session', JSON.stringify({ nombre: this.email, email: this.email, rol: this.rolLogin }));
-      this.router.navigate([this.rolLogin === 'nina' ? '/tabs-nina/home' : '/tabs-cuidador/dashboard']);
+      this.router.navigate([this.rolLogin === 'nina' ? '/onboarding-nina' : '/onboarding-cuidador']);
     } else {
       if (!this.nombre || !this.email || !this.password) {
         this.errorMsg = 'Por favor completa todos los campos.';
@@ -56,7 +56,7 @@ export class LoginPage {
       }
       const user = this.authService.login(this.email, this.password);
       if (user) {
-        this.router.navigate([user.rol === 'nina' ? '/tabs-nina/home' : '/tabs-cuidador/dashboard']);
+        this.router.navigate([user.rol === 'nina' ? '/onboarding-nina' : '/onboarding-cuidador']);
       }
     }
   }

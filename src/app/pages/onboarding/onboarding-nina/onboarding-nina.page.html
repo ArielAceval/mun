@@ -1,0 +1,151 @@
+<ion-content [fullscreen]="true">
+  <div class="page-wrapper">
+
+    <!-- Manchas acuarela SVG -->
+    <svg class="watercolor-svg" xmlns="http://www.w3.org/2000/svg"
+         viewBox="0 0 390 700" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <filter id="wcn1" x="-30%" y="-30%" width="160%" height="160%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.035"
+                        numOctaves="5" seed="3" result="noise"/>
+          <feDisplacementMap in="SourceGraphic" in2="noise"
+                             scale="22" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+        <filter id="wcn2" x="-30%" y="-30%" width="160%" height="160%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.04"
+                        numOctaves="4" seed="9" result="noise"/>
+          <feDisplacementMap in="SourceGraphic" in2="noise"
+                             scale="18" xChannelSelector="G" yChannelSelector="R"/>
+        </filter>
+      </defs>
+      <ellipse class="blob-anim blob-1"
+               cx="350" cy="-20" rx="200" ry="160"
+               fill="#f5c5d0" opacity="0.55" filter="url(#wcn1)"/>
+      <ellipse class="blob-anim blob-2"
+               cx="-30" cy="600" rx="180" ry="150"
+               fill="#c8b8e8" opacity="0.45" filter="url(#wcn2)"/>
+    </svg>
+
+    <div class="content">
+
+      <!-- Cabecera -->
+      <div class="header-bar">
+        <button class="skip-btn" (click)="skip()">✕</button>
+        <div class="progress-wrap">
+          <div class="progress-track">
+            <div class="progress-fill" [style.width.%]="progreso"></div>
+          </div>
+        </div>
+        <span class="progress-pct">{{ progreso }}%</span>
+      </div>
+
+      <!-- PASO 1 -->
+      <div *ngIf="step === 1" class="step-content">
+
+        <h2 class="step-title">¡Cuéntanos de ti!</h2>
+
+        <!-- Edad -->
+        <div class="section">
+          <label class="section-label">¿TU EDAD?</label>
+          <div class="edad-grid">
+            <button
+              *ngFor="let e of edades; let i = index"
+              class="edad-btn"
+              [class.selected]="edad === e"
+              [style.background]="edad === e ? '#9b8ec4' : coloresEdad[i]"
+              [style.color]="edad === e ? '#fff' : '#2c3e7d'"
+              [style.border]="edad === e ? '2px solid #9b8ec4' : (e === 'otro' ? '1.5px solid #ccc' : 'none')"
+              (click)="edad = e"
+            >{{ e }}</button>
+          </div>
+        </div>
+
+        <!-- Convivencia -->
+        <div class="section">
+          <label class="section-label">¿CON QUIÉN VIVES?</label>
+          <div class="conv-grid">
+            <button
+              *ngFor="let op of convivenciaOpciones"
+              class="conv-btn"
+              [class.selected]="isActive(convivencia, op.label)"
+              (click)="toggleMulti(convivencia, op.label)"
+            >
+              <span class="conv-emoji">{{ op.emoji }}</span>
+              <span class="conv-label">{{ op.label }}</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Avatar Muni -->
+        <div class="muni-wrap">
+          <img src="assets/avatars/muni-avatar.png" class="muni-avatar" alt="Muni"/>
+        </div>
+
+      </div>
+
+      <!-- PASO 2 -->
+      <div *ngIf="step === 2" class="step-content">
+
+        <h2 class="step-title">¿Cómo eres tú?</h2>
+
+        <!-- Cuerpo -->
+        <div class="section">
+          <label class="section-label">¿CÓMO ES TU CUERPO?</label>
+          <div class="cuerpo-row">
+            <button
+              *ngFor="let op of cuerpoOpciones"
+              class="cuerpo-btn"
+              [class.selected]="cuerpo === op.label"
+              (click)="cuerpo = op.label"
+            >
+              <span class="card-emoji">{{ op.emoji }}</span>
+              <span class="card-label">{{ op.label }}</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Estilo de vida -->
+        <div class="section">
+          <label class="section-label">¿ESTILO DE VIDA?</label>
+          <div class="estilo-row">
+            <button
+              *ngFor="let op of estiloOpciones"
+              class="estilo-btn"
+              [class.selected]="isActive(estiloVida, op.label)"
+              [style.background]="isActive(estiloVida, op.label) ? op.fondo : op.fondo"
+              (click)="toggleMulti(estiloVida, op.label)"
+            >
+              <span class="card-emoji">{{ op.emoji }}</span>
+              <span class="card-label">{{ op.label }}</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Productos menstruación -->
+        <div class="section">
+          <label class="section-label">¿PRODUCTOS DE MENSTRUACIÓN QUE USAS?</label>
+          <div class="prod-grid">
+            <button
+              *ngFor="let op of productosOpciones"
+              class="prod-btn"
+              [class.selected]="isActive(productos, op.label)"
+              (click)="toggleMulti(productos, op.label)"
+            >
+              <span class="card-emoji">{{ op.emoji }}</span>
+              <span class="card-label">{{ op.label }}</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Botón fijo -->
+    <div class="footer-btn">
+      <button class="continuar-btn" (click)="next()">
+        {{ step === 2 ? '¡Listo!' : 'Continuar' }}
+      </button>
+    </div>
+
+  </div>
+</ion-content>

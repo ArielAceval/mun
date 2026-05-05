@@ -1,0 +1,175 @@
+<ion-content [fullscreen]="true">
+  <div class="page-wrapper">
+
+    <!-- Manchas acuarela SVG -->
+    <svg class="watercolor-svg" xmlns="http://www.w3.org/2000/svg"
+         viewBox="0 0 390 700" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <filter id="wcc1" x="-30%" y="-30%" width="160%" height="160%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.035"
+                        numOctaves="5" seed="5" result="noise"/>
+          <feDisplacementMap in="SourceGraphic" in2="noise"
+                             scale="22" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+        <filter id="wcc2" x="-30%" y="-30%" width="160%" height="160%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.04"
+                        numOctaves="4" seed="12" result="noise"/>
+          <feDisplacementMap in="SourceGraphic" in2="noise"
+                             scale="18" xChannelSelector="G" yChannelSelector="R"/>
+        </filter>
+      </defs>
+      <ellipse class="blob-anim blob-1"
+               cx="370" cy="-10" rx="190" ry="150"
+               fill="#c8b8e8" opacity="0.45" filter="url(#wcc1)"/>
+      <ellipse class="blob-anim blob-2"
+               cx="-20" cy="650" rx="170" ry="140"
+               fill="#f5c5d0" opacity="0.45" filter="url(#wcc2)"/>
+    </svg>
+
+    <div class="content">
+
+      <!-- Cabecera -->
+      <div class="header-bar">
+        <button class="skip-btn" (click)="skip()">✕</button>
+        <div class="progress-wrap">
+          <div class="progress-track">
+            <div class="progress-fill" [style.width.%]="progreso"></div>
+          </div>
+        </div>
+        <span class="progress-pct">{{ progreso }}%</span>
+      </div>
+
+      <!-- PASO 1 -->
+      <div *ngIf="step === 1" class="step-content">
+
+        <h2 class="step-title">PERFIL DE TU HIJA</h2>
+
+        <!-- 1. Datos básicos -->
+        <div class="section">
+          <label class="section-label">1. DATOS BÁSICOS</label>
+
+          <div class="field-group">
+            <input
+              type="text"
+              class="field-input"
+              [(ngModel)]="nombreHija"
+              placeholder="Nombre de tu hija"
+            />
+          </div>
+
+          <div class="field-group field-icon">
+            <span class="field-icon-prefix">📅</span>
+            <input
+              type="date"
+              class="field-input with-icon"
+              [(ngModel)]="fechaNacimiento"
+            />
+          </div>
+        </div>
+
+        <!-- 2. Contextura y salud -->
+        <div class="section">
+          <label class="section-label">2. CONTEXTURA Y SALUD</label>
+          <select class="field-input" [(ngModel)]="complexion">
+            <option value="" disabled selected>Complexión física</option>
+            <option *ngFor="let op of complexionOpciones" [value]="op">{{ op }}</option>
+          </select>
+        </div>
+
+        <!-- 3. Estilo de vida -->
+        <div class="section">
+          <label class="section-label">3. ESTILO DE VIDA</label>
+
+          <p class="sub-label">Nivel de actividad</p>
+          <div class="check-row">
+            <label *ngFor="let op of actividadOpciones" class="check-item">
+              <input type="checkbox"
+                     [checked]="isActive(actividad, op)"
+                     (change)="toggleMulti(actividad, op)"/>
+              {{ op }}
+            </label>
+          </div>
+
+          <p class="sub-label">Escolaridad</p>
+          <div class="check-row">
+            <label *ngFor="let op of escolaridadOpciones" class="check-item">
+              <input type="checkbox"
+                     [checked]="isActive(escolaridad, op)"
+                     (change)="toggleMulti(escolaridad, op)"/>
+              {{ op }}
+            </label>
+          </div>
+
+          <p class="sub-label">Alimentación</p>
+          <div class="check-row">
+            <label *ngFor="let op of alimentacionOpciones" class="check-item">
+              <input type="checkbox"
+                     [checked]="isActive(alimentacion, op)"
+                     (change)="toggleMulti(alimentacion, op)"/>
+              {{ op }}
+            </label>
+          </div>
+
+          <div class="field-group" style="margin-top: 12px;">
+            <input
+              type="text"
+              class="field-input"
+              [(ngModel)]="alergias"
+              placeholder="Alergias/Restricciones"
+            />
+          </div>
+        </div>
+
+      </div>
+
+      <!-- PASO 2 -->
+      <div *ngIf="step === 2" class="step-content">
+
+        <h2 class="step-title">Asistencia y Productos</h2>
+
+        <!-- 4. Asistencia escolar -->
+        <div class="section">
+          <label class="section-label">4. ASISTENCIA ESCOLAR</label>
+
+          <div class="field-group">
+            <select class="field-input" [(ngModel)]="razonFalta">
+              <option value="" disabled selected>¿Por qué falta al colegio?</option>
+              <option *ngFor="let op of razonOpciones" [value]="op">{{ op }}</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <select class="field-input" [(ngModel)]="frecuenciaFalta">
+              <option value="" disabled selected>Frecuencia de ausencias</option>
+              <option *ngFor="let op of frecuenciaOpciones" [value]="op">{{ op }}</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 5. Productos menstruales -->
+        <div class="section">
+          <label class="section-label">5. PRODUCTOS DE GESTIÓN MENSTRUAL</label>
+          <div class="prod-list">
+            <label *ngFor="let op of productosOpciones" class="prod-item"
+                   [class.selected]="isActive(productos, op.label)">
+              <input type="checkbox"
+                     [checked]="isActive(productos, op.label)"
+                     (change)="toggleMulti(productos, op.label)"/>
+              <span class="prod-emoji">{{ op.emoji }}</span>
+              <span class="prod-label">{{ op.label }}</span>
+            </label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Botón fijo -->
+    <div class="footer-btn">
+      <button class="continuar-btn" (click)="next()">
+        {{ step === 2 ? '¡Listo!' : 'Continuar' }}
+      </button>
+    </div>
+
+  </div>
+</ion-content>

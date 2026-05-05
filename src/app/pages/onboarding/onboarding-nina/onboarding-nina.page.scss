@@ -1,0 +1,300 @@
+ion-content {
+  --background: #ffffff;
+}
+
+.page-wrapper {
+  position: relative;
+  min-height: 100vh;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+// ===== SVG ACUARELA =====
+
+@keyframes blob1Move {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(6px, 8px) scale(1.04); }
+  100% { transform: translate(-4px, 3px) scale(0.97); }
+}
+@keyframes blob2Move {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-5px, 7px) scale(1.05); }
+  100% { transform: translate(3px, -4px) scale(0.98); }
+}
+
+.watercolor-svg {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  overflow: visible;
+  z-index: 0;
+  pointer-events: none;
+}
+.blob-anim { transform-box: fill-box; transform-origin: center; }
+.blob-1 { animation: blob1Move 8s ease-in-out infinite alternate; }
+.blob-2 { animation: blob2Move 9s ease-in-out infinite alternate; animation-delay: 2s; }
+
+// ===== CONTENIDO =====
+
+.content {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  padding: 48px 24px 0;
+  padding-bottom: 100px;
+  overflow-y: auto;
+}
+
+// ===== CABECERA =====
+
+.header-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.skip-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #aaa;
+  cursor: pointer;
+  padding: 4px;
+  flex-shrink: 0;
+}
+
+.progress-wrap {
+  flex: 1;
+}
+
+.progress-track {
+  background: #eee;
+  border-radius: 10px;
+  height: 6px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  background: #9b8ec4;
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.4s ease;
+}
+
+.progress-pct {
+  color: #999;
+  font-size: 12px;
+  flex-shrink: 0;
+  min-width: 34px;
+  text-align: right;
+}
+
+// ===== TÍTULOS DE PASO =====
+
+.step-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  color: #2c3e7d;
+  font-weight: 700;
+  margin: 0 0 20px;
+}
+
+// ===== SECCIONES =====
+
+.section {
+  margin-bottom: 24px;
+}
+
+.section-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #2c3e7d;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+// ===== GRID EDAD =====
+
+.edad-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.edad-btn {
+  width: 100%;
+  aspect-ratio: 1;
+  min-height: 60px;
+  border-radius: 12px;
+  border: none;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+  &.selected {
+    box-shadow: 0 2px 8px rgba(155, 142, 196, 0.45);
+    transform: scale(1.06);
+  }
+}
+
+// ===== GRID CONVIVENCIA =====
+
+.conv-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.conv-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: #f9f5ff;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 12px 6px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+
+  &.selected {
+    border-color: #9b8ec4;
+    background: #ede8ff;
+  }
+}
+
+.conv-emoji { font-size: 2rem; }
+.conv-label { font-size: 11px; color: #555; text-align: center; }
+
+// ===== AVATAR MUNI =====
+
+.muni-wrap {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 16px;
+}
+
+.muni-avatar {
+  width: 80px;
+  object-fit: contain;
+}
+
+// ===== CUERPO ROW =====
+
+.cuerpo-row {
+  display: flex;
+  gap: 8px;
+}
+
+.cuerpo-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: #f9f5ff;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 12px 4px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+
+  &.selected {
+    border-color: #e8909f;
+    background: #ffe8f0;
+  }
+}
+
+// ===== ESTILO VIDA =====
+
+.estilo-row {
+  display: flex;
+  gap: 8px;
+}
+
+.estilo-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 80px;
+  min-height: 80px;
+  border: 2px solid transparent;
+  border-radius: 16px;
+  padding: 12px 8px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+
+  &.selected {
+    border-color: #9b8ec4;
+  }
+}
+
+// ===== PRODUCTOS GRID =====
+
+.prod-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.prod-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: #f9f5ff;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 12px 6px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+
+  &.selected {
+    border-color: #9b8ec4;
+    background: #ede8ff;
+  }
+}
+
+// ===== CARD SHARED =====
+
+.card-emoji { font-size: 2rem; }
+.card-label {
+  font-size: 11px;
+  color: #555;
+  text-align: center;
+  font-weight: 700;
+}
+
+// ===== BOTÓN FIJO =====
+
+.footer-btn {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  background: #ffffff;
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.07);
+  padding: 16px 24px;
+}
+
+.continuar-btn {
+  width: 100%;
+  background: #9b8ec4;
+  color: #ffffff;
+  border: none;
+  border-radius: 25px;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  &:active { opacity: 0.85; }
+}

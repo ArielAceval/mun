@@ -11,6 +11,16 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/login/login.page').then((m) => m.LoginPage),
   },
   {
+    path: 'onboarding-nina',
+    loadComponent: () =>
+      import('./pages/onboarding/onboarding-nina/onboarding-nina.page').then((m) => m.OnboardingNinaPage),
+  },
+  {
+    path: 'onboarding-cuidador',
+    loadComponent: () =>
+      import('./pages/onboarding/onboarding-cuidador/onboarding-cuidador.page').then((m) => m.OnboardingCuidadorPage),
+  },
+  {
     path: 'tabs-nina',
     loadComponent: () =>
       import('./pages/tabs-nina/tabs-nina.page').then((m) => m.TabsNinaPage),
