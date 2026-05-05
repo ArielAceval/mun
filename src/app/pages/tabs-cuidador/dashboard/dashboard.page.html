@@ -1,6 +1,75 @@
+<ion-header [translucent]="false">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button>
+        <ion-icon name="menu-outline" style="color:#2c3e7d;font-size:22px;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="mun-logo-title">MUN</ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content [fullscreen]="true">
-  <div style="display:flex;align-items:center;justify-content:center;height:100%;flex-direction:column;gap:12px;color:#aaa;">
-    <span style="font-size:3rem">🏠</span>
-    <p>Inicio Cuidador/a — próximamente</p>
+
+  <!-- Logo MUN circular -->
+  <div class="logo-wrap">
+    <div class="logo-circle">MUN</div>
   </div>
+
+  <!-- Título -->
+  <h1 class="page-title">TIPS DE TU HERMANA<br>MAYOR VIRTUAL, MUNI</h1>
+
+  <!-- Acordeón 1 -->
+  <div class="acordeon-header" [class.open]="acordeon1Abierto" (click)="toggleAcordeon1()">
+    <span class="acordeon-titulo">
+      <span class="ac-icon">📅</span>
+      RECOMENDACIONES GENERALES DE HIGIENE
+    </span>
+    <ion-icon [name]="acordeon1Abierto ? 'chevron-up-outline' : 'chevron-down-outline'" class="ac-arrow"></ion-icon>
+  </div>
+  <div class="acordeon-body" *ngIf="acordeon1Abierto">
+    <div class="ac-subtitulo">Enseñando hábitos de cambio</div>
+    <div class="ac-muni-label">MUNI te sugiere:</div>
+    <p class="ac-texto">Enséñale la regla de las 4 horas para productos absorbentes.</p>
+    <div class="ac-body-icon">⏰</div>
+  </div>
+
+  <!-- Acordeón 2 -->
+  <div class="acordeon-header" [class.open]="acordeon2Abierto" (click)="toggleAcordeon2()">
+    <span class="acordeon-titulo">
+      <span class="ac-icon">🥦</span>
+      BIENESTAR Y ALIMENTACIÓN
+    </span>
+    <ion-icon [name]="acordeon2Abierto ? 'chevron-up-outline' : 'chevron-down-outline'" class="ac-arrow"></ion-icon>
+  </div>
+  <div class="acordeon-body" *ngIf="acordeon2Abierto">
+    <div class="ac-subtitulo">Alimentos para días sensibles</div>
+    <div class="ac-muni-label">MUNI te sugiere:</div>
+    <p class="ac-texto">Incorporar alimentos antiinflamatorios (cúrcuma, piña). Evitar exceso de sal.</p>
+    <div class="ac-body-icon">🥗🍍</div>
+  </div>
+
+  <!-- Acordeón 3 -->
+  <div class="acordeon-header" [class.open]="acordeon3Abierto" (click)="toggleAcordeon3()">
+    <span class="acordeon-titulo">
+      <span class="ac-icon">🚦</span>
+      ALERTA DE DOLOR O SANGRADO
+    </span>
+    <ion-icon [name]="acordeon3Abierto ? 'chevron-up-outline' : 'chevron-down-outline'" class="ac-arrow"></ion-icon>
+  </div>
+  <div class="acordeon-body" *ngIf="acordeon3Abierto">
+    <div class="ac-subtitulo">Cuándo contactar a profesionales MUN</div>
+    <div class="ac-muni-label">MUNI te sugiere:</div>
+    <p class="ac-texto">Si el dolor interrumpe el sueño, o el sangrado es extremo (&gt;1 producto/hora), agenda con un especialista. Ver guía de 'Semáforo de Dolor'.</p>
+    <div class="ac-body-icon">🚦</div>
+    <button class="reservar-btn">RESERVAR</button>
+  </div>
+
+  <!-- Banner -->
+  <div class="banner">
+    <div class="banner-muni-label">MUNI TE DICE:</div>
+    <div class="banner-texto">"Acompáñala sin tabúes."</div>
+    <button class="guia-btn">GUÍA DE DIÁLOGO MUN</button>
+  </div>
+
 </ion-content>

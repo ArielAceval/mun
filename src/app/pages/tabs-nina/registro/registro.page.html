@@ -15,49 +15,78 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" style="--background:#fdfaf5;">
+<ion-content [fullscreen]="true">
+
   <div class="registro-wrapper">
 
+    <!-- Título -->
     <h1 class="page-title">REGISTRO DE HOY</h1>
 
-    <!-- Calendario semanal compacto -->
-    <div class="week-calendar">
-      <div class="day-col" *ngFor="let d of days">
-        <span class="day-label">{{ d.label }}</span>
-        <div class="day-circle" [ngClass]="getDayClass(d.num)">{{ d.num }}</div>
+    <!-- Calendario con navegación -->
+    <div class="cal-row">
+      <ion-button fill="clear" class="nav-btn">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+      <div class="dias-wrap">
+        <div class="dia-col" *ngFor="let d of diasSemana">
+          <span class="dia-label">{{ d.label }}</span>
+          <div class="dia-circulo"
+               [class.activo]="d.activo"
+               [class.normal]="!d.activo">
+            {{ d.num }}
+          </div>
+          <div class="periodo-dot" [class.visible]="d.periodo"></div>
+        </div>
       </div>
+      <ion-button fill="clear" class="nav-btn">
+        <ion-icon name="chevron-forward-outline"></ion-icon>
+      </ion-button>
     </div>
 
     <!-- Rueda Huella Dactilar del Dolor -->
-    <div class="wheel-wrap">
-      <div class="wheel">
-        <!-- Anillos de afuera hacia adentro -->
-        <div class="ring ring-5"></div>
-        <div class="ring ring-4"></div>
-        <div class="ring ring-3"></div>
-        <div class="ring ring-2"></div>
-        <div class="ring ring-center">
-          <div class="wheel-text">
-            <span>HUELLA</span>
-            <span>DACTILAR</span>
-            <span>DEL DOLOR</span>
-          </div>
-        </div>
-        <!-- Pétalos en el anillo exterior -->
-        <div *ngFor="let angle of petalAngles"
-             class="petal-wrap"
-             [style.transform]="'rotate(' + angle + 'deg)'">
-          <span class="petal-icon" [style.transform]="'rotate(' + (-angle) + 'deg)'">🌸</span>
+    <div class="wheel-container">
+
+      <!-- Fondo degradado -->
+      <div class="wheel-bg"></div>
+
+      <!-- Anillos concéntricos -->
+      <div class="ring anillo-1"></div>
+      <div class="ring anillo-2"></div>
+      <div class="ring anillo-3"></div>
+      <div class="ring anillo-4"></div>
+      <div class="ring anillo-5"></div>
+
+      <!-- Centro -->
+      <div class="ring centro">
+        <div class="centro-texto">
+          <span>HUELLA</span>
+          <span>DACTILAR</span>
+          <span>DEL DOLOR</span>
         </div>
       </div>
+
+      <!-- Sección coloreada (dolor registrado) -->
+      <div class="dolor-arco"></div>
+
+      <!-- Pétalos en el anillo exterior -->
+      <div *ngFor="let angle of petalAngles"
+           class="petalo-wrap"
+           [style.transform]="'rotate(' + angle + 'deg)'">
+        <span class="petalo" [style.transform]="'rotate(-' + angle + 'deg)'">🌸</span>
+      </div>
+
     </div>
 
+    <div style="height: 160px;"></div>
   </div>
 
-  <!-- MUNI flotante -->
-  <div slot="fixed" class="muni-float">
-    <img src="assets/avatars/muni-avatar.png" class="muni-img" alt="Muni"/>
-    <div class="muni-bubble">¿Cómo te sientes hoy?</div>
+  <!-- MUNI flotante y botón chat en slot fixed -->
+  <div slot="fixed" class="fixed-bottom">
+    <div class="muni-float">
+      <img src="assets/avatars/muni-avatar.png" class="muni-img" alt="Muni"/>
+      <div class="muni-bubble">¡Registra cómo te sientes!</div>
+    </div>
+    <button class="chat-fab" (click)="navegarChat()">💬</button>
   </div>
 
 </ion-content>

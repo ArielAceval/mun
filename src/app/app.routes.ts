@@ -41,6 +41,11 @@ export const routes: Routes = [
           import('./pages/tabs-nina/registro/registro.page').then((m) => m.NinaRegistroPage),
       },
       {
+        path: 'muni-chat',
+        loadComponent: () =>
+          import('./pages/tabs-nina/muni-chat/muni-chat.page').then((m) => m.MuniChatPage),
+      },
+      {
         path: 'learn',
         loadComponent: () =>
           import('./pages/tabs-nina/learn/learn.page').then((m) => m.NinaLearnPage),

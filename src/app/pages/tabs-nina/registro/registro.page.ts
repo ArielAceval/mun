@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import {
   IonContent, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { menuOutline, notificationsOutline } from 'ionicons/icons';
+import {
+  chevronBackOutline, chevronForwardOutline, chatbubbleOutline,
+  notificationsOutline, menuOutline,
+} from 'ionicons/icons';
 
 @Component({
   selector: 'app-nina-registro',
@@ -14,24 +18,23 @@ import { menuOutline, notificationsOutline } from 'ionicons/icons';
   imports: [CommonModule, IonContent, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon],
 })
 export class NinaRegistroPage {
-  days = [
-    { label: 'L', num: 6 },
-    { label: 'M', num: 7 },
-    { label: 'M', num: 8 },
-    { label: 'J', num: 9 },
-    { label: 'V', num: 10 },
-    { label: 'S', num: 11 },
-    { label: 'D', num: 12 },
+  diasSemana = [
+    { label: 'L', num: 7,  activo: false, periodo: false },
+    { label: 'M', num: 8,  activo: false, periodo: false },
+    { label: 'M', num: 9,  activo: false, periodo: false },
+    { label: 'J', num: 10, activo: true,  periodo: true  },
+    { label: 'V', num: 11, activo: false, periodo: false },
+    { label: 'S', num: 12, activo: false, periodo: false },
+    { label: 'D', num: 13, activo: false, periodo: false },
   ];
-  todayNum = 10;
 
-  petalAngles = Array.from({ length: 8 }, (_, i) => i * 45);
+  petalAngles = [0, 45, 90, 135, 180, 225, 270, 315];
 
-  constructor() {
-    addIcons({ menuOutline, notificationsOutline });
+  constructor(private router: Router) {
+    addIcons({ chevronBackOutline, chevronForwardOutline, chatbubbleOutline, notificationsOutline, menuOutline });
   }
 
-  getDayClass(day: number): string {
-    return day === this.todayNum ? 'day-today' : '';
+  navegarChat() {
+    this.router.navigate(['/tabs-nina/muni-chat']);
   }
 }

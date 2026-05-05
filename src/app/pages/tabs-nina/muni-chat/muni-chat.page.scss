@@ -1,0 +1,163 @@
+ion-content {
+  --background: #ffffff;
+}
+
+ion-header ion-toolbar {
+  --background: #fdfaf5;
+  --border-color: transparent;
+  box-shadow: none;
+}
+
+.mun-logo-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  color: #9b8ec4;
+  font-weight: 700;
+  text-align: center;
+}
+
+.notif-btn { position: relative; }
+
+.notif-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: #e8909f;
+  color: #fff;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  font-size: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  pointer-events: none;
+}
+
+// ===== LAYOUT =====
+
+.page-wrapper {
+  position: relative;
+  min-height: 100%;
+}
+
+.watercolor-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding-bottom: 24px;
+}
+
+// ===== BURBUJA NIÑA =====
+
+.burbuja-nina {
+  background: #c8b8e8;
+  color: #2c3e7d;
+  border-radius: 16px 16px 4px 16px;
+  padding: 12px 16px;
+  max-width: 75%;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 20px 16px 0 auto;
+  align-self: flex-end;
+}
+
+// ===== AVATAR MUNI =====
+
+.muni-img {
+  width: 140px;
+  display: block;
+  margin: 16px auto;
+}
+
+// ===== TARJETA INFERIOR =====
+
+.card-inferior {
+  background: #ffffff;
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  margin-top: 8px;
+  flex: 1;
+}
+
+.card-titulo {
+  font-size: 15px;
+  font-weight: 700;
+  color: #2c3e7d;
+  margin-bottom: 4px;
+}
+
+.card-subtitulo {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 16px;
+}
+
+// ===== PREGUNTAS =====
+
+.pregunta-item {
+  background: #f5f5f5;
+  border-radius: 20px;
+  border-left: 3px solid #9b8ec4;
+  padding: 10px 16px;
+  font-size: 13px;
+  color: #444;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+// ===== CHECKBOX =====
+
+.checkbox-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 12px 0;
+}
+
+.muni-check {
+  --checkbox-background-checked: #9b8ec4;
+  --border-color: #9b8ec4;
+  --checkmark-color: #ffffff;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.check-label {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.4;
+}
+
+// ===== BOTÓN ENVIAR =====
+
+.enviar-btn {
+  width: 100%;
+  height: 52px;
+  background: #9b8ec4;
+  color: #ffffff;
+  border: none;
+  border-radius: 25px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  margin-top: 4px;
+
+  &:active { opacity: 0.85; }
+}
