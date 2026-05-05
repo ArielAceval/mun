@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MUN — Flujo del Prototipo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --rosa: #e8909f;
+      --lavanda: #9b8ec4;
+      --teal: #5bbfb5;
+      --azul: #2c3e7d;
+      --crema: #fdfaf5;
+      --gris: #666;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--crema);
+      color: var(--azul);
+      overflow-x: hidden;
+    }
+
+    /* Manchas acuarela fijas */
+    .watercolor-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+    }
+    .blob-1 { width: 400px; height: 350px; background: #c4b5e0; opacity: 0.25; top: -100px; left: -80px; animation: float1 9s ease-in-out infinite alternate; }
+    .blob-2 { width: 300px; height: 350px; background: #e8a48a; opacity: 0.2; top: 40%; left: -60px; animation: float2 11s ease-in-out infinite alternate; }
+    .blob-3 { width: 350px; height: 300px; background: #6070c0; opacity: 0.15; bottom: -80px; right: -60px; animation: float3 8s ease-in-out infinite alternate; }
+
+    @keyframes float1 { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(20px,15px) scale(1.05); } }
+    @keyframes float2 { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(-10px,20px) scale(1.04); } }
+    @keyframes float3 { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(15px,-10px) scale(1.06); } }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 16px 80px;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+      animation: fadeDown 0.8s ease both;
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      color: var(--rosa);
+      letter-spacing: 4px;
+      line-height: 1;
+    }
+    .logo span { color: #c9a96e; }
+    .tagline {
+      font-family: 'Dancing Script', cursive;
+      font-size: 22px;
+      color: var(--teal);
+      margin-top: 4px;
+    }
+    .header-divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(to right, var(--rosa), var(--lavanda));
+      margin: 16px auto;
+      border-radius: 2px;
+    }
+    .header-subtitle {
+      font-size: 13px;
+      color: var(--gris);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 300;
+    }
+
+    /* CTA Button */
+    .cta-wrapper {
+      text-align: center;
+      margin-bottom: 56px;
+      animation: fadeDown 0.8s 0.2s ease both;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--rosa), var(--lavanda));
+      color: white;
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      padding: 14px 36px;
+      border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(232,144,159,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+      letter-spacing: 0.5px;
+    }
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(232,144,159,0.45);
+    }
+    .cta-btn span { margin-right: 8px; }
+
+    /* Section title */
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      color: var(--azul);
+      margin-bottom: 8px;
+    }
+    .section-desc {
+      font-size: 13px;
+      color: var(--gris);
+      margin-bottom: 28px;
+      font-weight: 300;
+    }
+
+    /* Flujo diagram */
+    .flujo-section {
+      margin-bottom: 56px;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+
+    .flujo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 640px) {
+      .flujo-grid { grid-template-columns: 1fr; }
+      .logo { font-size: 36px; }
+      .tagline { font-size: 18px; }
+      .section-title { font-size: 18px; }
+      .cta-btn { font-size: 14px; padding: 12px 28px; }
+      .node-title { font-size: 14px; }
+      .pantalla-title { font-size: 14px; }
+      .header { margin-bottom: 32px; }
+      .cta-wrapper { margin-bottom: 40px; }
+      .flujo-section { margin-bottom: 40px; }
+      .pantallas-section { margin-bottom: 40px; }
+    }
+
+    /* Login central */
+    .login-node {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+
+    .node {
+      background: white;
+      border-radius: 16px;
+      padding: 18px 20px;
+      box-shadow: 0 4px 16px rgba(44,62,125,0.08);
+      border-left: 4px solid var(--lavanda);
+      animation: fadeUp 0.6s ease both;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .node:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(44,62,125,0.12);
+    }
+    .node.login-card {
+      border-left: none;
+      border-top: 4px solid var(--rosa);
+      max-width: 320px;
+      width: 100%;
+      text-align: center;
+    }
+    .node.rosa { border-left-color: var(--rosa); }
+    .node.teal { border-left-color: var(--teal); }
+    .node.azul { border-left-color: var(--azul); }
+
+    .node-icon { font-size: 28px; margin-bottom: 6px; }
+    .node-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      color: var(--azul);
+      margin-bottom: 4px;
+    }
+    .node-desc {
+      font-size: 12px;
+      color: var(--gris);
+      line-height: 1.5;
+      font-weight: 300;
+    }
+
+    /* Columnas de flujo */
+    .flujo-col {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .flujo-col-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 8px 14px;
+      border-radius: 20px;
+      text-align: center;
+      margin-bottom: 4px;
+    }
+    .flujo-col-title.nina {
+      background: #ffe8f0;
+      color: var(--rosa);
+    }
+    .flujo-col-title.cuidador {
+      background: #ede8ff;
+      color: var(--lavanda);
+    }
+
+    /* Flecha */
+    .arrow {
+      text-align: center;
+      color: var(--lavanda);
+      font-size: 20px;
+      margin: -4px 0;
+      opacity: 0.6;
+    }
+
+    /* Sub nodos (pantallas secundarias) */
+    .sub-nodes {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-left: 16px;
+      border-left: 2px dashed #e0d8f0;
+      margin-left: 8px;
+    }
+    .sub-node {
+      background: #f9f5ff;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: var(--azul);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+    .sub-node:hover { background: #ede8ff; }
+    .sub-node-icon { font-size: 16px; flex-shrink: 0; }
+    .sub-node-text { font-weight: 400; }
+    .sub-node-desc { font-size: 11px; color: var(--gris); margin-top: 2px; font-weight: 300; }
+
+    /* Pantallas section */
+    .pantallas-section {
+      margin-bottom: 56px;
+      animation: fadeUp 0.8s 0.5s ease both;
+    }
+
+    .pantallas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 14px;
+    }
+
+    .pantalla-card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 16px rgba(44,62,125,0.07);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .pantalla-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(44,62,125,0.12);
+    }
+    .pantalla-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+    }
+    .badge-nina { background: #ffe8f0; color: var(--rosa); }
+    .badge-cuidador { background: #ede8ff; color: var(--lavanda); }
+    .badge-ambos { background: #e8fff8; color: var(--teal); }
+
+    .pantalla-icon { font-size: 32px; margin-bottom: 8px; }
+    .pantalla-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px;
+      color: var(--azul);
+      margin-bottom: 6px;
+    }
+    .pantalla-desc {
+      font-size: 12px;
+      color: var(--gris);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+    .pantalla-features {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .feature-tag {
+      font-size: 10px;
+      background: var(--crema);
+      color: var(--azul);
+      padding: 2px 8px;
+      border-radius: 10px;
+      border: 1px solid #e8e0f0;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 32px 0 0;
+      border-top: 1px solid #ede8f5;
+      animation: fadeUp 0.8s 0.7s ease both;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      color: var(--rosa);
+    }
+    .footer-logo span { color: #c9a96e; }
+    .footer-tagline {
+      font-family: 'Dancing Script', cursive;
+      font-size: 16px;
+      color: var(--teal);
+      margin-bottom: 12px;
+    }
+    .footer-text {
+      font-size: 12px;
+      color: var(--gris);
+      font-weight: 300;
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fondo acuarela -->
+  <div class="watercolor-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <div class="container">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">M<span>☽</span>N</div>
+      <div class="tagline">Nuestro primer ciclo</div>
+      <div class="header-divider"></div>
+      <div class="header-subtitle">Flujo del Prototipo · Mayo 2026</div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-wrapper">
+      <a href="https://mun-sens.netlify.app" target="_blank" class="cta-btn">
+        <span>🌙</span> Ver prototipo en vivo
+      </a>
+    </div>
+
+    <!-- Flujo -->
+    <div class="flujo-section">
+      <div class="section-title">Flujo de Navegación</div>
+      <div class="section-desc">Cómo se mueve el usuario dentro de la app según su rol</div>
+
+      <!-- Login -->
+      <div class="login-node">
+        <div class="node login-card">
+          <div class="node-icon">🔐</div>
+          <div class="node-title">Login</div>
+          <div class="node-desc">Selecciona tu rol al ingresar</div>
+        </div>
+      </div>
+
+      <div class="arrow">↓</div>
+
+      <!-- Dos columnas -->
+      <div class="flujo-grid">
+
+        <!-- Niña -->
+        <div class="flujo-col">
+          <div class="flujo-col-title nina">🌸 Flujo Niña</div>
+
+          <div class="node rosa">
+            <div class="node-icon">📋</div>
+            <div class="node-title">Onboarding Niña</div>
+            <div class="node-desc">2 pasos: quién eres + cómo es tu cuerpo</div>
+          </div>
+
+          <div class="arrow">↓</div>
+
+          <div class="node rosa">
+            <div class="node-icon">🏠</div>
+            <div class="node-title">Mi Ciclo</div>
+            <div class="node-desc">Dashboard principal con calendario y seguimiento</div>
+          </div>
+
+          <div class="arrow">↓</div>
+
+          <div class="sub-nodes">
+            <div class="sub-node">
+              <div class="sub-node-icon">💭</div>
+              <div>
+                <div class="sub-node-text">Cómo me Siento</div>
+                <div class="sub-node-desc">Tracker de síntomas y dolor</div>
+              </div>
+            </div>
+            <div class="sub-node">
+              <div class="sub-node-icon">📊</div>
+              <div>
+                <div class="sub-node-text">Registro de Hoy</div>
+                <div class="sub-node-desc">Huella dactilar del dolor</div>
+              </div>
+            </div>
+            <div class="sub-node">
+              <div class="sub-node-icon">🤝</div>
+              <div>
+                <div class="sub-node-text">Chat con MUNI</div>
+                <div class="sub-node-desc">Preguntas para el cuidador</div>
+              </div>
+            </div>
+            <div class="sub-node">
+              <div class="sub-node-icon">📚</div>
+              <div>
+                <div class="sub-node-text">Aprende & Diviértete</div>
+                <div class="sub-node-desc">Videos, cuentos, nutrición</div>
+              </div>
+            </div>
+            <div class="sub-node">
+              <div class="sub-node-icon">👤</div>
+              <div>
+                <div class="sub-node-text">Para Tí</div>
+                <div class="sub-node-desc">Pictogramas y niñas deportistas</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cuidador -->
+        <div class="flujo-col">
+          <div class="flujo-col-title cuidador">🤗 Flujo Cuidador/a</div>
+
+          <div class="node">
+            <div class="node-icon">📋</div>
+            <div class="node-title">Onboarding Cuidador/a</div>
+            <div class="node-desc">2 pasos: perfil de tu hija + asistencia y productos</div>
+          </div>
+
+          <div class="arrow">↓</div>
+
+          <div class="node">
+            <div class="node-icon">🏠</div>
+            <div class="node-title">Dashboard</div>
+            <div class="node-desc">Tips de MUNI con logo y acordeones</div>
+          </div>
+
+          <div class="arrow">↓</div>
+
+          <div class="sub-nodes">
+            <div class="sub-node">
+              <div class="sub-node-icon">💡</div>
+              <div>
+                <div class="sub-node-text">Consejos de MUNI</div>
+                <div class="sub-node-desc">Higiene, alimentación, alertas</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Pantallas -->
+    <div class="pantallas-section">
+      <div class="section-title">Pantallas del Prototipo</div>
+      <div class="section-desc">Descripción de cada pantalla implementada</div>
+
+      <div class="pantallas-grid">
+
+        <div class="pantalla-card">
+          <div class="pantalla-badge badge-ambos">Ambos roles</div>
+          <div class="pantalla-icon">🔐</div>
+          <div class="pantalla-title">Login</div>
+          <div class="pantalla-desc">Ingreso con email y contraseña. Selector de rol (Niña / Cuidador/a) que determina el flujo completo.</div>
+          <div class="pantalla-features">
+            <span class="feature-tag">Demo sin backend</span>
+            <span class="feature-tag">Selector de rol</span>
+            <span class="feature-tag">Registro simulado</span>
+          </div>
+        </div>
+
+        <div class="pantalla-card">
+          <div class="pantalla-badge badge-nina">Niña</div>
+          <div class="pantalla-icon">📋</div>
+          <div class="pantalla-title">Onboarding Niña</div>
+          <div class="pantalla-desc">Encuesta inicial en 2 pasos: edad, con quién vive, contextura, estilo de vida y productos menstruales que usa.</div>
+          <div class="pantalla-features">
+            <span class="feature-tag">2 pasos</span>
+            <span class="feature-tag">Selección visual</span>
+            <span class="feature-tag">Avatar MUNI</span>
+          </div>
+        </div>
+
+        <div class="pantalla-card">
+          <div class="pantalla-badge badge-nina">Niña</div>
+          <div class="pantalla-icon">📅</div>
+          <div class="pantalla-title">Mi Ciclo</div>
+          <div class="pantalla-desc">Dashboard principal. Calendario semanal, nivel de sangrado con slider, registro de mood y acceso a ejercicios de suelo pélvico.</div>
+          <div class="pantalla-features">
+            <span class="feature-tag">Calendario</span>
+            <span class="feature-tag">Slider sangrado</span>
+            <span class="feature-tag">MUNI flotante</span>
+          </div>
+        </div>
+
+        <div class="pantalla-card">
+          <div class="pantalla-badge badge-nina">Niña</div>
+          <div class="pantalla-icon">🩺</div>
+          <div class="pantalla-title">Cómo me Siento</div>
+          <div class="pantalla-desc">Tracker de dolor con silueta del cuerpo, tipos de dolor (Pinchazos, Presión, Retorcijones, Como fuego) y nivel con emojis.</div>
+          <div class="pantalla-features">
+            <span class="feature-tag">Silueta corporal</span>
+            <span class="feature-tag">Tipos de dolor</span>
+            <span class="feature-tag">Nivel con emojis</span>
+          </div>
+        </div>
+
+        <div class="pantalla-card">
+          <div class="pantalla-badge badge-nina">Niña</div>
+          <div class="pantalla-icon">🌸</div>
+          <div class="pantalla-title">Registro de Hoy</div>
+          <div class="pantalla-desc">Rueda visual "Huella Dactilar del Dolor" con anillos concéntricos de colores. Calendario navegable y MUNI de apoyo.</div>
+          <div class="pantalla-features">
+            <span class="feature-tag">Rueda visual</span>
+            <span class="feature-tag">5 anillos</span>
+            <span class="feature-tag">Navegación por día</span>
+          </div>
+        </div>
+
+        <div class="pantalla-card">
+          <div class="pantalla-badge badge-nina">Niña</div>
+          <div class="pantalla-icon">💬</div>
+          <div class="pantalla-title">Chat con MUNI</div>
+          <div class="pantalla-desc">Espacio confidencial donde MUNI ayuda a la niña a redactar preguntas para su cuidador/a con total privacidad.</div>
+          <div class="pantalla-features">
+            <span class="feature-tag">Confidencial 🔒</span>
+            <span class="feature-tag">Preguntas sugeridas</span>
+            <span class="feature-tag">Envío a cuidador</span>
+          </div>
+        </div>
+
+        <div class="pantalla-card">
+          <div class="pantalla-badge badge-nina">Niña</div>
+          <div class="pantalla-icon">📚</div>
+          <div class="pantalla-title">Aprende & Diviértete</div>
+          <div class="pantalla-desc">Centro educativo con videos de kinesiología, cuentos animados, guía de nutrición y acceso a preguntas anónimas.</div>
+          <div class="pantalla-features">
+            <span class="feature-tag">Videos</span>
+            <span class="feature-tag">Cuentos animados</span>
+            <span class="feature-tag">Preguntas anónimas</span>
+          </div>
+        </div>
+
+        <div class="pantalla-card">
+          <div class="pantalla-badge badge-nina">Niña</div>
+          <div class="pantalla-icon">⭐</div>
+          <div class="pantalla-title">Para Tí</div>
+          <div class="pantalla-desc">Pictogramas del ciclo para entender visualmente el proceso. Guía especial para niñas deportistas con productos específicos.</div>
+          <div class="pantalla-features">
+            <span class="feature-tag">Pictogramas</span>
+            <span class="feature-tag">Niñas deportistas</span>
+            <span class="feature-tag">Productos MUN</span>
+          </div>
+        </div>
+
+        <div class="pantalla-card">
+          <div class="pantalla-badge badge-cuidador">Cuidador/a</div>
+          <div class="pantalla-icon">📋</div>
+          <div class="pantalla-title">Onboarding Cuidador/a</div>
+          <div class="pantalla-desc">Perfil clínico de la hija en 2 pasos: datos básicos, contextura, estilo de vida, asistencia escolar y productos menstruales.</div>
+          <div class="pantalla-features">
+            <span class="feature-tag">Perfil clínico</span>
+            <span class="feature-tag">2 pasos</span>
+            <span class="feature-tag">Checkboxes</span>
+          </div>
+        </div>
+
+        <div class="pantalla-card">
+          <div class="pantalla-badge badge-cuidador">Cuidador/a</div>
+          <div class="pantalla-icon">🤗</div>
+          <div class="pantalla-title">Dashboard Cuidador/a</div>
+          <div class="pantalla-desc">Tips de MUNI organizados en acordeones: higiene, bienestar/alimentación y alertas de dolor. Sin acceso a datos privados de la niña.</div>
+          <div class="pantalla-features">
+            <span class="feature-tag">Tips MUNI</span>
+            <span class="feature-tag">Acordeones</span>
+            <span class="feature-tag">Sin datos privados</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="footer-logo">M<span>☽</span>N</div>
+      <div class="footer-tagline">Nuestro primer ciclo</div>
+      <div class="footer-text">Prototipo desarrollado con Ionic + Angular · Mayo 2026<br>Josefa Fica Ávila · @mun_box</div>
+    </div>
+
+  </div>
+</body>
+</html>
