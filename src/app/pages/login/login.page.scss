@@ -1,0 +1,238 @@
+ion-content {
+  --background: #ffffff;
+}
+
+.page-wrapper {
+  position: relative;
+  min-height: 100vh;
+  background: #ffffff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+// ===== SVG ACUARELA =====
+
+@keyframes blob1Move {
+  0%   { transform: translate(0px, 0px) scale(1) rotate(0deg); }
+  50%  { transform: translate(8px, 6px) scale(1.04) rotate(2deg); }
+  100% { transform: translate(-4px, 3px) scale(0.97) rotate(-1deg); }
+}
+
+@keyframes blob2Move {
+  0%   { transform: translate(0px, 0px) scale(1) rotate(0deg); }
+  50%  { transform: translate(-6px, 8px) scale(1.05) rotate(-2deg); }
+  100% { transform: translate(4px, -3px) scale(0.98) rotate(1deg); }
+}
+
+@keyframes blob3Move {
+  0%   { transform: translate(0px, 0px) scale(1) rotate(0deg); }
+  50%  { transform: translate(5px, -7px) scale(1.03) rotate(1.5deg); }
+  100% { transform: translate(-3px, 4px) scale(0.98) rotate(-2deg); }
+}
+
+.watercolor-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.blob-anim {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.blob-1 { animation: blob1Move 8s   ease-in-out infinite alternate; }
+.blob-2 { animation: blob2Move 9s   ease-in-out infinite alternate; animation-delay: 2s; }
+.blob-3 { animation: blob3Move 7.5s ease-in-out infinite alternate; animation-delay: 1s; }
+
+// ===== CONTENIDO PRINCIPAL =====
+
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 32px 48px;
+  flex: 1;
+}
+
+// ===== LOGO MUN =====
+
+.logo-area {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.mun-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 64px;
+  line-height: 1;
+  letter-spacing: 4px;
+}
+
+.letter-pink {
+  color: #e8909f;
+}
+
+.letter-moon {
+  color: #c9a96e;
+}
+
+.logo-tagline {
+  font-family: 'Dancing Script', cursive;
+  font-style: italic;
+  color: #5bbfb5;
+  font-size: 18px;
+  margin-top: 6px;
+}
+
+// ===== TÍTULO =====
+
+.title-area {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.page-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px;
+  color: #e8909f;
+  font-weight: 400;
+  margin: 0 0 8px;
+}
+
+.page-subtitle {
+  color: #999;
+  font-size: 13px;
+  font-weight: 300;
+  margin: 0;
+}
+
+// ===== FORMULARIO =====
+
+.form-area {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-label {
+  color: #5bbfb5;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.field-input {
+  background: #eeeef8;
+  border: none;
+  border-radius: 25px;
+  padding: 14px 20px;
+  font-size: 15px;
+  color: #555;
+  width: 100%;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
+
+  &::placeholder {
+    color: #aaa;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(91, 191, 181, 0.18);
+  }
+}
+
+// ===== SELECTOR DE ROL =====
+
+.rol-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.rol-label {
+  color: #999;
+  font-size: 13px;
+  text-align: center;
+}
+
+.rol-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.rol-btn {
+  border: 1.5px solid #e8909f;
+  background: transparent;
+  border-radius: 20px;
+  color: #e8909f;
+  padding: 8px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+
+  &.active {
+    background: #e8909f;
+    color: #ffffff;
+  }
+}
+
+// ===== ERROR =====
+
+.error-msg {
+  color: #e07070;
+  font-size: 12px;
+  text-align: center;
+  margin: 0;
+}
+
+// ===== BOTÓN PRINCIPAL =====
+
+.submit-btn {
+  background: none;
+  border: none;
+  color: #5bbfb5;
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  padding: 8px;
+  width: 100%;
+  margin-top: 4px;
+}
+
+// ===== TOGGLE =====
+
+.toggle-text {
+  color: #999;
+  font-size: 13px;
+  text-align: center;
+  margin: 0;
+}
+
+.toggle-link {
+  color: #5bbfb5;
+  text-decoration: underline;
+  cursor: pointer;
+}

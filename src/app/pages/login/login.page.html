@@ -1,0 +1,134 @@
+<ion-content [fullscreen]="true">
+  <div class="page-wrapper">
+    <!-- Manchas de acuarela SVG -->
+    <svg class="watercolor-svg" xmlns="http://www.w3.org/2000/svg"
+         viewBox="0 0 390 700" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <!-- Filtro acuarela 1: violeta -->
+        <filter id="wc1" x="-30%" y="-30%" width="160%" height="160%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.035"
+                        numOctaves="5" seed="3" result="noise"/>
+          <feDisplacementMap in="SourceGraphic" in2="noise"
+                             scale="22" xChannelSelector="R"
+                             yChannelSelector="G"/>
+        </filter>
+        <!-- Filtro acuarela 2: salmón -->
+        <filter id="wc2" x="-30%" y="-30%" width="160%" height="160%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.04"
+                        numOctaves="4" seed="9" result="noise"/>
+          <feDisplacementMap in="SourceGraphic" in2="noise"
+                             scale="18" xChannelSelector="G"
+                             yChannelSelector="R"/>
+        </filter>
+        <!-- Filtro acuarela 3: azul -->
+        <filter id="wc3" x="-30%" y="-30%" width="160%" height="160%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.03"
+                        numOctaves="5" seed="17" result="noise"/>
+          <feDisplacementMap in="SourceGraphic" in2="noise"
+                             scale="25" xChannelSelector="B"
+                             yChannelSelector="G"/>
+        </filter>
+      </defs>
+
+      <!-- Mancha 1: violeta, arriba, desborda por arriba y derecha -->
+      <ellipse class="blob-anim blob-1"
+               cx="160" cy="-30" rx="260" ry="200"
+               fill="#a896cc" opacity="0.6" filter="url(#wc1)"/>
+
+      <!-- Mancha 2: salmón, izquierda medio, desborda por izquierda -->
+      <ellipse class="blob-anim blob-2"
+               cx="-20" cy="370" rx="170" ry="130"
+               fill="#e8a48a" opacity="0.5" filter="url(#wc2)"/>
+
+      <!-- Mancha 3: azul índigo, abajo derecha, desborda por derecha y abajo -->
+      <ellipse class="blob-anim blob-3"
+               cx="420" cy="680" rx="220" ry="180"
+               fill="#4455b8" opacity="0.7" filter="url(#wc3)"/>
+    </svg>
+
+    <div class="content">
+      <!-- Logo MUN -->
+      <div class="logo-area">
+        <div class="mun-logo">
+          <span class="letter-pink">M</span><span class="letter-moon">☽</span><span class="letter-pink">N</span>
+        </div>
+        <div class="logo-tagline">Nuestro primer ciclo</div>
+      </div>
+
+      <!-- Título -->
+      <div class="title-area">
+        <h1 class="page-title">{{ isLoginMode ? 'Login' : 'Registro' }}</h1>
+        <p class="page-subtitle">
+          {{ isLoginMode ? 'Iniciar sesión para continuar' : 'Crea tu cuenta para comenzar' }}
+        </p>
+      </div>
+
+      <!-- Formulario -->
+      <div class="form-area">
+        <div *ngIf="!isLoginMode" class="field-group">
+          <label class="field-label">NOMBRE</label>
+          <input
+            type="text"
+            class="field-input"
+            [(ngModel)]="nombre"
+            placeholder="Tu nombre"
+          />
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">EMAIL</label>
+          <input
+            type="email"
+            class="field-input"
+            [(ngModel)]="email"
+            placeholder="hello@example.com"
+          />
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">PASSWORD</label>
+          <input
+            type="password"
+            class="field-input"
+            [(ngModel)]="password"
+            placeholder="••••••"
+          />
+        </div>
+
+        <!-- Selector de rol (solo en registro) -->
+        <div *ngIf="!isLoginMode" class="rol-selector">
+          <label class="rol-label">¿Quién eres?</label>
+          <div class="rol-buttons">
+            <button
+              class="rol-btn"
+              [class.active]="rol === 'nina'"
+              (click)="rol = 'nina'"
+            >
+              🌸 Soy Niña
+            </button>
+            <button
+              class="rol-btn"
+              [class.active]="rol === 'cuidador'"
+              (click)="rol = 'cuidador'"
+            >
+              🤗 Soy Cuidador/a
+            </button>
+          </div>
+        </div>
+
+        <p *ngIf="errorMsg" class="error-msg">{{ errorMsg }}</p>
+
+        <button class="submit-btn" (click)="onSubmit()">
+          {{ isLoginMode ? 'Login' : 'Crear cuenta' }}
+        </button>
+
+        <p class="toggle-text">
+          {{ isLoginMode ? '¿No tienes cuenta? ' : '¿Ya tienes cuenta? ' }}<span
+            class="toggle-link"
+            (click)="toggleMode()"
+          >{{ isLoginMode ? 'Regístrate' : 'Inicia sesión' }}</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</ion-content>

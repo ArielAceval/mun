@@ -1,289 +1,211 @@
-# MUN — Nuestro Primer Ciclo 🌙
+<div align="center">
 
-Aplicación móvil de acompañamiento menstrual para niñas en etapa de pre-menarquia, menarquia y primeros años de menstruación. Desarrollada para el proyecto **MUN Box** por Josefa Fica Ávila.
+# 🌙 MUN — Nuestro Primer Ciclo
 
----
+### Aplicación móvil de acompañamiento menstrual para niñas
 
-## Índice
+*Educación, seguimiento y apoyo durante la pre-menarquia, menarquia y primeros años de menstruación*
 
-- [Versiones de la App](#versiones-de-la-app)
-- [Stack Tecnológico](#stack-tecnológico)
-- [Arquitectura del Proyecto](#arquitectura-del-proyecto)
-- [Estructura de Carpetas](#estructura-de-carpetas)
-- [Flujo de Navegación](#flujo-de-navegación)
-- [Perfiles de Usuario](#perfiles-de-usuario)
-- [Módulos Funcionales](#módulos-funcionales)
-- [Estado Actual del Prototipo](#estado-actual-del-prototipo)
-- [Roadmap](#roadmap)
-- [Cómo Ejecutar el Proyecto](#cómo-ejecutar-el-proyecto)
+![Estado](https://img.shields.io/badge/Estado-Prototipo%20Activo-pink)
+![Ionic](https://img.shields.io/badge/Ionic-8.0-blue?logo=ionic)
+![Angular](https://img.shields.io/badge/Angular-20-red?logo=angular)
+![Capacitor](https://img.shields.io/badge/Capacitor-8.3-green?logo=capacitor)
+![Licencia](https://img.shields.io/badge/Licencia-MIT-lightgrey)
+
+</div>
 
 ---
 
-## Versiones de la App
+## 📖 Descripción
 
-El proyecto contempla tres versiones que comparten el mismo núcleo base:
+**MUN** es una aplicación móvil (iOS y Android) que acompaña a niñas y sus cuidadores durante el proceso de la primera menstruación. A través de contenido educativo, un calendario de seguimiento del ciclo, registro de síntomas y bienestar, y un sistema de preguntas anónimas respondidas por profesionales, MUN busca normalizar y empoderar esta etapa de la vida.
 
-| Versión | Nombre | Descripción | Prioridad |
-|---|---|---|---|
-| 1 | **MUN Estándar** | Versión principal. Lenguaje estándar, contenido completo. | 🔴 Alta |
-| 2 | **MUN Para Todas** | Orientada a contextos vulnerables. Funcionalidades clave offline. Enfoque socioeconómico en recopilación de datos. | 🟡 Media |
-| 3 | **MUN Sens** | Para niñas neurodivergentes. Personalización de colores, sonidos y narración de textos. Pictogramas del ciclo. | 🟡 Media |
+La app cuenta con **MUNI**, una hermana mayor virtual de 13 años que guía a las niñas con calidez y conocimiento a lo largo de toda la experiencia.
 
-> Las versiones 2 y 3 son adaptaciones de la versión Estándar en lenguaje, ilustraciones y configuración de accesibilidad. El núcleo de código es compartido.
+### ✨ Funcionalidades clave
 
----
-
-## Stack Tecnológico
-
-| Capa | Tecnología | Versión |
-|---|---|---|
-| Framework UI | Ionic Framework | ^8.0.0 |
-| Framework Web | Angular (Standalone Components) | ^20.0.0 |
-| Runtime nativo | Capacitor | 8.3.0 |
-| Lenguaje | TypeScript | ~5.9.0 |
-| Estilos | SCSS | — |
-| Iconos | Ionicons | ^7.0.0 |
-| Plataformas objetivo | iOS, Android | — |
-
-> **Nota sobre dispositivos chinos:** Fabricantes como Huawei (sin Google Play Services) requieren distribución vía **AppGallery** o APK directo. Capacitor soporta la compilación de APK estándar que funciona en estos dispositivos. No requiere una plataforma separada, pero sí pruebas específicas de compatibilidad.
-
----
-
-## Arquitectura del Proyecto
-
-### Decisión: Una sola app con modos, no tres apps separadas
-
-La app detecta el modo activo (Estándar / Para Todas / Sens) mediante un servicio de configuración. Esto permite:
-
-- Mantener un solo código base y un solo proceso de publicación en stores
-- Compartir lógica de calendario, tracker y contenido
-- Diferenciar solo en tema visual, textos y assets según el modo
-
-### Decisión: Roles de usuario separados desde el login
-
-Dos perfiles con navegación completamente independiente:
-
-- **Niña** — acceso al dashboard personal, tracker, contenido educativo y perfil
-- **Cuidador** — acceso a tips y guías de acompañamiento. Sin acceso a los datos privados de la niña
-
----
-
-## Estructura de Carpetas
-
-```
-src/
-├── app/
-│   ├── core/
-│   │   ├── services/
-│   │   │   ├── auth.service.ts          # Rol activo (niña | cuidador)
-│   │   │   ├── cycle.service.ts         # Lógica del ciclo menstrual
-│   │   │   ├── config.service.ts        # Modo de app (estándar | para-todas | sens)
-│   │   │   └── storage.service.ts       # Persistencia local (Capacitor Preferences)
-│   │   └── models/
-│   │       ├── user.model.ts
-│   │       ├── cycle.model.ts
-│   │       └── notification.model.ts
-│   │
-│   ├── pages/
-│   │   ├── login/                       # Selección "Soy Niña" / "Soy Cuidador"
-│   │   ├── onboarding/                  # Encuesta inicial personalización
-│   │   │
-│   │   ├── tabs-nina/                   # Shell de navegación (niña)
-│   │   │   ├── home/                    # Mi Ciclo — dashboard principal
-│   │   │   ├── tracker/                 # Cómo me Siento hoy
-│   │   │   ├── learn/                   # Aprende & Diviértete
-│   │   │   └── profile/                 # Para Tí — configuración y productos
-│   │   │
-│   │   └── tabs-cuidador/               # Shell de navegación (cuidador)
-│   │       ├── dashboard/               # Resumen general
-│   │       └── tips/                    # Guías y consejos de acompañamiento
-│   │
-│   └── shared/
-│       └── components/
-│           ├── big-sister/              # Avatar guía animado
-│           └── cycle-calendar/          # Componente reutilizable de calendario
-│
-├── assets/
-│   ├── images/
-│   ├── icons/
-│   └── avatars/
-│
-└── theme/
-    └── variables.scss                   # Tokens de color y tipografía MUN
-```
-
----
-
-## Flujo de Navegación
-
-```
-/ (raíz)
-└── /login
-      ├── [Soy Niña]
-      │     └── /onboarding
-      │           └── /tabs-nina
-      │                 ├── /home        ← pantalla principal
-      │                 ├── /tracker     ← registro diario
-      │                 ├── /learn       ← contenido educativo
-      │                 └── /profile     ← perfil y configuración
-      │
-      └── [Soy Cuidador]
-            └── /tabs-cuidador
-                  ├── /dashboard         ← resumen general
-                  └── /tips              ← guías de acompañamiento
-```
-
----
-
-## Perfiles de Usuario
-
-### Niña (usuario principal)
-- Registro con autorización del tutor (menores de 14 años, según legislación vigente)
-- Perfil y datos del ciclo: solo ella puede modificarlos
-- Calendario menstrual: **privado**. El cuidador no puede verlo directamente
-- Puede optar por compartir su calendario con un cuidador de forma voluntaria
-- Puede tener hasta **3 tutores asociados**, uno como administrador principal
-
-### Cuidador
-- Hasta 3 cuidadores por niña (1 administrador + 2 secundarios aprobados por el administrador)
-- Recibe **notificaciones tipo consejo** coordinadas con las fechas del ciclo de la niña, sin revelar datos específicos
-- No tiene comunicación directa con la niña dentro de la app
-- Puede recibir alerta si la niña activa una señal de necesidad de apoyo
-
-### Profesional MUN (administrador de contenido)
-- Recibe notificaciones de preguntas sin respuesta automática
-- Revisa y aprueba respuestas antes de publicarlas
-- Gestiona actualización de contenido educativo (videos, textos, FAQs)
-
----
-
-## Módulos Funcionales
-
-### 1. Calendario y Seguimiento del Ciclo
-- Registro de flujo, síntomas, estado de ánimo y productos usados
-- Datos privados de la niña
-- Funciona **offline** en MUN Para Todas (descarga progresiva por etapa)
-
-### 2. Tracker de Bienestar
-- Registro emocional y sensorial diario
-- Emojis e iconos ilustrativos (especialmente relevante para MUN Sens)
-
-### 3. Contenido Educativo
-- Organizado por etapas: pre-menarquia → menarquia → primeros años
-- Formatos: videos, textos, cuentos animados, guías de nutrición, ejercicios de suelo pélvico
-- Pictogramas del ciclo para MUN Sens
-- Narración de textos en audio para MUN Sens
-
-### 4. Sistema de Preguntas Anónimas
-- La niña puede hacer preguntas que no están en el contenido existente
-- Notificación automática al profesional MUN correspondiente
-- Moderación de preguntas inapropiadas (respuesta genérica + registro para análisis)
-- La respuesta aprobada queda disponible para futuras usuarias con la misma pregunta
-
-### 5. Notificaciones Diferenciadas
-- **Niñas:** contenido educativo, recordatorios del ciclo, apoyo emocional
-- **Cuidadores:** tips de acompañamiento coordinados con el ciclo (sin revelar datos)
-
-### 6. Sistema de Alertas de Apoyo
-- La app detecta patrones fuera del rango de normalidad (ej: sangrado excesivo)
-- Sugiere a la niña pedir apoyo a su tutor
-- En MUN Para Todas: sugiere acudir al colegio o centro médico; acceso a telemedicina gratuita (en evaluación)
-
-### 7. Recopilación de Datos (anonimizados)
-**MUN Estándar:** productos usados y motivo, edad de primera menstruación, entorno familiar, síntomas, método de alivio más efectivo del kit.
-
-**MUN Para Todas:** lo anterior + entorno socioeconómico, escolar y emocional.
-
----
-
-## Estado Actual del Prototipo
-
-| Pantalla / Módulo | Estado |
+| Módulo | Descripción |
 |---|---|
-| Theme y colores MUN | ✅ Implementado |
-| Tab1 — Pantalla de bienvenida | 🟡 Parcial (estilos y estructura) |
-| Tab2 — Tracker de ánimo | 🟠 Iniciado (bug: usa `*ngFor` de NgModule, incompatible con standalone) |
-| Tab3 — Contenido | ❌ Template vacío |
-| Login / Selección de perfil | ❌ Pendiente |
-| Onboarding / Encuesta inicial | ❌ Pendiente |
-| Tabs Niña / Cuidador separados | ❌ Pendiente (rutas unificadas aún) |
-
-> **Bug conocido en Tab2:** `*ngFor` requiere importar `NgFor` o `CommonModule` en el componente standalone. Sin esto, la grilla de emojis no renderiza.
+| 🔐 **Login / Registro** | Autenticación simulada con roles diferenciados (Niña / Cuidador/a) |
+| 📅 **Mi Ciclo** | Calendario de seguimiento menstrual privado |
+| 💭 **Cómo me Siento** | Registro diario de estado de ánimo y síntomas físicos |
+| 📚 **Aprende & Diviértete** | Videos, cuentos animados, guías de nutrición y ejercicios |
+| ❓ **Preguntas Anónimas** | Sistema de preguntas respondidas por profesionales de MUN |
+| 🤗 **Panel Cuidador/a** | Tips y consejos de acompañamiento coordinados con el ciclo |
+| 🌸 **MUNI Avatar** | Hermana mayor virtual guía durante toda la experiencia |
 
 ---
 
-## Roadmap
+## 🗂️ Versiones
 
-### Fase 1 — Prototipo Funcional (MUN Estándar)
-1. Refactor de rutas: login → onboarding → tabs por rol
-2. Pantalla de login con selección de perfil
-3. Corrección de Tab2 (tracker) y migración a nueva estructura
-4. Dashboard "Mi Ciclo" con calendario
-5. Módulo "Aprende & Diviértete" (contenido estático inicial)
-6. Vista básica de Cuidador con tips
+| Versión | Descripción | Estado |
+|---|---|---|
+| **MUN Estándar** | Versión principal, lenguaje estándar | 🔴 En desarrollo |
+| **MUN Para Todas** | Contextos vulnerables, funciones offline, foco socioeconómico | 🟡 Planificado |
+| **MUN Sens** | Niñas neurodivergentes: pictogramas, colores, narración de audio | 🟡 Planificado |
 
-### Fase 2 — Funcionalidades Core
-7. Sistema de preguntas anónimas
-8. Notificaciones diferenciadas
-9. Gestión de tutores (hasta 3, con administrador)
-10. Sistema de alertas de apoyo temprano
-
-### Fase 3 — Versiones Adaptadas
-11. MUN Para Todas (modo offline, descarga progresiva)
-12. MUN Sens (personalización de colores/sonidos, narración, pictogramas)
-
-### Fase 4 — Backend y Datos
-13. Autenticación real y gestión de perfiles
-14. Panel de profesionales MUN
-15. Recopilación de datos anonimizados y exportación
+> Las tres versiones comparten el mismo código base. Las diferencias son de lenguaje, assets y configuración de accesibilidad.
 
 ---
 
-## Cómo Ejecutar el Proyecto
+## 🛠️ Stack Tecnológico
 
-### Requisitos previos
-- Node.js ≥ 18
-- npm ≥ 9
-- Ionic CLI: `npm install -g @ionic/cli`
+| Tecnología | Versión | Uso |
+|---|---|---|
+| ![Ionic](https://img.shields.io/badge/-Ionic-3880FF?logo=ionic&logoColor=white) | 8.0 | Framework UI móvil |
+| ![Angular](https://img.shields.io/badge/-Angular-DD0031?logo=angular&logoColor=white) | 20.0 | Framework web (Standalone Components) |
+| ![Capacitor](https://img.shields.io/badge/-Capacitor-119EFF?logo=capacitor&logoColor=white) | 8.3 | Runtime nativo iOS/Android |
+| ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?logo=typescript&logoColor=white) | 5.9 | Lenguaje principal |
+| ![SCSS](https://img.shields.io/badge/-SCSS-CC6699?logo=sass&logoColor=white) | — | Estilos |
+| ![Ionicons](https://img.shields.io/badge/-Ionicons-3880FF?logo=ionic&logoColor=white) | 7.0 | Iconografía |
 
-### Instalación
+---
+
+## 📋 Requisitos Previos
+
+- **Node.js** ≥ 18.x → [descargar](https://nodejs.org)
+- **npm** ≥ 9.x (incluido con Node.js)
+- **Ionic CLI** → `npm install -g @ionic/cli`
+- **Git** → [descargar](https://git-scm.com)
+
+Para builds nativos (opcional):
+- **Xcode** ≥ 14 (solo macOS, para iOS)
+- **Android Studio** (para Android)
+
+---
+
+## 🚀 Guía de Instalación
 
 ```bash
-git clone <repo-url>
+# 1. Clonar el repositorio
+git clone https://github.com/tu-usuario/munsens-prototipo-v1.git
 cd munsens-prototipo-v1
+
+# 2. Instalar dependencias
 npm install
-```
 
-### Desarrollo web
-
-```bash
+# 3. Ejecutar en desarrollo
 ionic serve
-# o
-npm start
 ```
 
-### Compilar para dispositivo
+La app estará disponible en `http://localhost:8100`
 
-```bash
-# iOS
-ionic cap build ios
+> 💡 **Tip:** Para simular vista móvil, abre Chrome DevTools (`F12`) → ícono de dispositivo (`Ctrl+Shift+M`) → selecciona iPhone 12 Pro.
 
-# Android
-ionic cap build android
+---
+
+## ⚙️ Comandos Disponibles
+
+| Comando | Descripción |
+|---|---|
+| `npm start` | Levanta servidor de desarrollo con live reload |
+| `npm run build` | Build de producción |
+| `npm run watch` | Build en modo watch |
+| `npm test` | Tests unitarios con Karma/Jasmine |
+| `npm run lint` | Análisis estático del código |
+| `ionic cap build ios` | Compila para iOS |
+| `ionic cap build android` | Compila para Android |
+| `ionic cap sync` | Sincroniza assets con proyectos nativos |
+
+---
+
+## 📁 Estructura de Carpetas
+
 ```
-
-### Ejecutar tests
-
-```bash
-npm test
+munsens-prototipo-v1/
+├── src/
+│   ├── app/
+│   │   ├── core/
+│   │   │   ├── services/
+│   │   │   │   └── auth.service.ts       # Autenticación simulada (localStorage)
+│   │   │   └── models/                   # Interfaces y tipos de datos
+│   │   ├── pages/
+│   │   │   ├── login/                    # Login y registro con diseño acuarela
+│   │   │   ├── tabs-nina/                # Navegación principal (niña)
+│   │   │   │   ├── home/                 # Mi Ciclo — dashboard
+│   │   │   │   ├── tracker/              # Cómo me Siento hoy
+│   │   │   │   ├── learn/                # Aprende & Diviértete
+│   │   │   │   └── profile/              # Para Tí
+│   │   │   └── tabs-cuidador/            # Navegación cuidador/a
+│   │   │       ├── dashboard/            # Resumen general
+│   │   │       └── tips/                 # Guías de acompañamiento
+│   │   └── shared/
+│   │       └── components/
+│   │           └── big-sister/           # Avatar MUNI (hermana mayor virtual)
+│   ├── assets/
+│   │   ├── avatars/
+│   │   │   └── muni-avatar.png           # Avatar MUNI
+│   │   ├── mockups/                      # Referencias visuales del diseño
+│   │   └── images/
+│   └── theme/
+│       └── variables.scss                # Tokens de color MUN
+├── README.md
+├── CONTRIBUTING.md
+├── CHANGELOG.md
+└── package.json
 ```
 
 ---
 
-## Contacto
+## 👤 Perfiles de Usuario
 
-**Josefa Fica Ávila** — [@mun_box](https://instagram.com/mun_box) — josefa@fica.cl
+### 🌸 Niña
+- Calendario y datos del ciclo completamente privados
+- Puede asociar hasta 3 tutores/as (1 administrador/a + 2 secundarios)
+- Puede compartir su calendario con un/a cuidador/a si así lo desea
+
+### 🤗 Cuidador/a
+- Recibe consejos coordinados con el ciclo (sin acceso a datos privados)
+- Acceso a guías de acompañamiento profesional
 
 ---
 
-*MUN — Nuestro primer ciclo*
+## 🗺️ Roadmap
+
+### ✅ Fase 1 — Prototipo Base (actual)
+- [x] Estructura Ionic/Angular/Capacitor
+- [x] Theme y tokens de color MUN
+- [x] Pantalla de bienvenida y tracker de síntomas
+- [x] Login/Registro simulado con roles diferenciados
+
+### 🔄 Fase 2 — Funcionalidades Core
+- [ ] Dashboard "Mi Ciclo" con calendario interactivo
+- [ ] Onboarding con encuesta inicial
+- [ ] Módulo educativo "Aprende & Diviértete"
+- [ ] Sistema de preguntas anónimas con profesionales
+- [ ] Notificaciones diferenciadas por rol
+
+### 🔮 Fase 3 — Versiones Adaptadas
+- [ ] MUN Para Todas (modo offline, descarga progresiva)
+- [ ] MUN Sens (pictogramas, accesibilidad, narración de audio)
+- [ ] Integración con telemedicina gratuita
+
+### 🏗️ Fase 4 — Producción
+- [ ] Backend real y base de datos
+- [ ] Panel de profesionales MUN
+- [ ] Publicación en App Store y Google Play
+
+---
+
+## 🤝 Contribuir
+
+¿Quieres colaborar? Lee nuestra [guía de contribución](CONTRIBUTING.md).
+
+---
+
+## 📄 Licencia
+
+MIT © Josefa Fica Ávila — Ver [LICENSE](LICENSE) para más detalles.
+
+---
+
+## 📬 Contacto
+
+**Josefa Fica Ávila** — Creadora del proyecto MUN
+
+[![Instagram](https://img.shields.io/badge/@mun__box-E4405F?logo=instagram&logoColor=white)](https://instagram.com/mun_box)
+[![Email](https://img.shields.io/badge/josefa@fica.cl-D14836?logo=gmail&logoColor=white)](mailto:josefa@fica.cl)
+[![WhatsApp](https://img.shields.io/badge/+56971325877-25D366?logo=whatsapp&logoColor=white)](https://wa.me/56971325877)
+
+---
+<div align="center"><i>MUN — Nuestro primer ciclo 🌙</i></div>
