@@ -1,17 +1,47 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="tracker-container">
+    
+    <h1 class="main-title">Cómo me Siento</h1>
+    <p class="subtitle">Toca todo lo que sientas</p>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+    <section>
+      <h2 class="section-title">Mi Estado de Ánimo Hoy</h2>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" *ngFor="let mood of moods">
+            <button 
+              class="emoji-button" 
+              [style.backgroundColor]="mood.color"
+              [class.selected]="selectedMoods.includes(mood.label)"
+              (click)="toggleMood(mood.label)">
+              <span class="emoji">{{mood.emoji}}</span>
+              <span class="label">{{mood.label}}</span>
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </section>
+
+    <section>
+      <h2 class="section-title">Lo que Estoy Sintiendo</h2>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" *ngFor="let s of sensorySymptoms">
+            <button 
+              class="emoji-button" 
+              [style.backgroundColor]="s.color"
+              [class.selected]="selectedSymptoms.includes(s.label)"
+              (click)="toggleSymptom(s.label)">
+              <span class="emoji">{{s.emoji}}</span>
+              <span class="label">{{s.label}}</span>
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </section>
+
+    <button class="save-button" (click)="handleSave()">
+      {{ showSaved ? '✓ ¡Guardado!' : 'Guardar mi Registro' }}
+    </button>
+  </div>
 </ion-content>

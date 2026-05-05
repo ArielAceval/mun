@@ -1,17 +1,26 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 1
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="welcome-wrapper">
+    
+    <div class="hero-image-container">
+      <img src="assets/image_f6bb4f.png" alt="Bienvenida MUN Sens">
+    </div>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+    <div class="text-content">
+      <h1>¡Hola!</h1>
+      <p>Te acompañamos en este camino con calma y mucho cariño.</p>
+    </div>
+
+    <div class="action-buttons">
+      <ion-button class="main-btn" expand="block" mode="ios">
+        <ion-icon slot="start" name="sparkles-outline"></ion-icon>
+        ¿Cómo me siento hoy?
+      </ion-button>
+      
+      <ion-button class="secondary-btn" expand="block" fill="clear" mode="ios">
+        <ion-icon slot="start" name="book-outline"></ion-icon>
+        Guía de consejos
+      </ion-button>
+    </div>
+
+  </div>
 </ion-content>
