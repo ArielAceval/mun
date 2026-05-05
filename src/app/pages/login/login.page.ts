@@ -18,6 +18,7 @@ export class LoginPage {
   email = '';
   password = '';
   rol: UserRole = 'nina';
+  rolLogin: UserRole = 'nina';
   errorMsg = '';
 
   constructor(private authService: AuthService, private router: Router) {}
@@ -29,6 +30,7 @@ export class LoginPage {
     this.email = '';
     this.password = '';
     this.rol = 'nina';
+    this.rolLogin = 'nina';
   }
 
   onSubmit() {
@@ -39,11 +41,9 @@ export class LoginPage {
         this.errorMsg = 'Por favor completa todos los campos.';
         return;
       }
-      // Modo demo: cualquier email/clave válidos entran directamente
-      const saved = this.authService.getCurrentUser();
-      const rol: UserRole = saved ? saved.rol : 'nina';
-      localStorage.setItem('mun_session', JSON.stringify({ nombre: this.email, email: this.email, rol }));
-      this.router.navigate([rol === 'nina' ? '/tabs-nina/home' : '/tabs-cuidador/dashboard']);
+      // Modo demo: entra con el rol seleccionado en pantalla
+      localStorage.setItem('mun_session', JSON.stringify({ nombre: this.email, email: this.email, rol: this.rolLogin }));
+      this.router.navigate([this.rolLogin === 'nina' ? '/tabs-nina/home' : '/tabs-cuidador/dashboard']);
     } else {
       if (!this.nombre || !this.email || !this.password) {
         this.errorMsg = 'Por favor completa todos los campos.';

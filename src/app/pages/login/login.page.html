@@ -95,6 +95,27 @@
           />
         </div>
 
+        <!-- Selector de rol (solo en login) -->
+        <div *ngIf="isLoginMode" class="rol-selector">
+          <label class="rol-label" style="font-size: 12px">¿Cómo quieres entrar?</label>
+          <div class="rol-buttons">
+            <button
+              class="rol-btn"
+              [class.active]="rolLogin === 'nina'"
+              (click)="rolLogin = 'nina'"
+            >
+              🌸 Soy Niña
+            </button>
+            <button
+              class="rol-btn"
+              [class.active]="rolLogin === 'cuidador'"
+              (click)="rolLogin = 'cuidador'"
+            >
+              🤗 Soy Cuidador/a
+            </button>
+          </div>
+        </div>
+
         <!-- Selector de rol (solo en registro) -->
         <div *ngIf="!isLoginMode" class="rol-selector">
           <label class="rol-label">¿Quién eres?</label>
