@@ -43,7 +43,7 @@ export class LoginPage {
       const saved = this.authService.getCurrentUser();
       const rol: UserRole = saved ? saved.rol : 'nina';
       localStorage.setItem('mun_session', JSON.stringify({ nombre: this.email, email: this.email, rol }));
-      this.router.navigate([rol === 'nina' ? '/tabs/tab1' : '/tabs/tab3']);
+      this.router.navigate([rol === 'nina' ? '/tabs-nina/home' : '/tabs-cuidador/dashboard']);
     } else {
       if (!this.nombre || !this.email || !this.password) {
         this.errorMsg = 'Por favor completa todos los campos.';
@@ -56,7 +56,7 @@ export class LoginPage {
       }
       const user = this.authService.login(this.email, this.password);
       if (user) {
-        this.router.navigate([user.rol === 'nina' ? '/tabs/tab1' : '/tabs/tab3']);
+        this.router.navigate([user.rol === 'nina' ? '/tabs-nina/home' : '/tabs-cuidador/dashboard']);
       }
     }
   }
