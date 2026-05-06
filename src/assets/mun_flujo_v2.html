@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MUN — Nueva Propuesta del Flujo · v2</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --rosa: #e8909f;
+      --lavanda: #9b8ec4;
+      --teal: #5bbfb5;
+      --azul: #2c3e7d;
+      --crema: #fdfaf5;
+      --gris: #666;
+      --dorado: #c9a96e;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--crema);
+      color: var(--azul);
+      overflow-x: hidden;
+    }
+
+    /* Manchas acuarela */
+    .watercolor-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+    }
+    .blob-1 { width: 400px; height: 350px; background: #c4b5e0; opacity: 0.25; top: -100px; left: -80px; animation: float1 9s ease-in-out infinite alternate; }
+    .blob-2 { width: 300px; height: 350px; background: #e8a48a; opacity: 0.2; top: 35%; left: -60px; animation: float2 11s ease-in-out infinite alternate; }
+    .blob-3 { width: 350px; height: 300px; background: #6070c0; opacity: 0.15; top: 65%; right: -60px; animation: float3 8s ease-in-out infinite alternate; }
+    .blob-4 { width: 280px; height: 280px; background: #5bbfb5; opacity: 0.12; bottom: -60px; left: 30%; animation: float1 10s ease-in-out infinite alternate; }
+
+    @keyframes float1 { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(20px,15px) scale(1.05); } }
+    @keyframes float2 { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(-10px,20px) scale(1.04); } }
+    @keyframes float3 { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(15px,-10px) scale(1.06); } }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 32px 16px 80px;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      animation: fadeDown 0.8s ease both;
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      color: var(--rosa);
+      letter-spacing: 4px;
+      line-height: 1;
+    }
+    .logo span { color: var(--dorado); }
+    .tagline {
+      font-family: 'Dancing Script', cursive;
+      font-size: 22px;
+      color: var(--teal);
+      margin-top: 4px;
+    }
+    .header-divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(to right, var(--rosa), var(--lavanda));
+      margin: 16px auto;
+      border-radius: 2px;
+    }
+    .header-subtitle {
+      font-size: 13px;
+      color: var(--gris);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 300;
+    }
+    .version-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--rosa), var(--lavanda));
+      color: white;
+      font-size: 11px;
+      letter-spacing: 2px;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-top: 12px;
+      font-weight: 700;
+    }
+
+    /* Intro ejecutivo */
+    .intro-box {
+      background: white;
+      border-radius: 20px;
+      padding: 28px 32px;
+      box-shadow: 0 4px 20px rgba(44,62,125,0.08);
+      margin-bottom: 48px;
+      border-top: 4px solid var(--teal);
+      animation: fadeUp 0.8s 0.1s ease both;
+    }
+    .intro-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      color: var(--azul);
+      margin-bottom: 12px;
+    }
+    .intro-text {
+      font-size: 14px;
+      color: var(--gris);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+    .intro-text strong {
+      color: var(--azul);
+      font-weight: 700;
+    }
+
+    /* Section title */
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      color: var(--azul);
+      margin-bottom: 6px;
+    }
+    .section-desc {
+      font-size: 13px;
+      color: var(--gris);
+      margin-bottom: 24px;
+      font-weight: 300;
+    }
+    .section-block {
+      margin-bottom: 56px;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    /* Decisiones estratégicas */
+    .decisiones-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .decision-card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px 22px;
+      box-shadow: 0 4px 16px rgba(44,62,125,0.07);
+      transition: transform 0.2s, box-shadow 0.2s;
+      border-left: 4px solid var(--rosa);
+    }
+    .decision-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(44,62,125,0.12);
+    }
+    .decision-card.lavanda { border-left-color: var(--lavanda); }
+    .decision-card.teal { border-left-color: var(--teal); }
+    .decision-card.azul { border-left-color: var(--azul); }
+    .decision-card.dorado { border-left-color: var(--dorado); }
+
+    .decision-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      font-style: italic;
+      color: var(--rosa);
+      opacity: 0.5;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .decision-card.lavanda .decision-num { color: var(--lavanda); }
+    .decision-card.teal .decision-num { color: var(--teal); }
+    .decision-card.azul .decision-num { color: var(--azul); }
+    .decision-card.dorado .decision-num { color: var(--dorado); }
+
+    .decision-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      color: var(--azul);
+      margin-bottom: 8px;
+    }
+    .decision-desc {
+      font-size: 12px;
+      color: var(--gris);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* Puertas de entrada */
+    .puertas-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+    @media (max-width: 700px) {
+      .puertas-grid { grid-template-columns: 1fr; }
+    }
+
+    .puerta-card {
+      background: white;
+      border-radius: 16px;
+      padding: 22px;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(44,62,125,0.07);
+      border: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .puerta-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(44,62,125,0.12);
+    }
+    .puerta-card.b2c { border-color: #ffd0dc; background: linear-gradient(180deg, #fff 70%, #fff5f7 100%); }
+    .puerta-card.b2b2c { border-color: #d8d0e8; background: linear-gradient(180deg, #fff 70%, #f7f5fc 100%); }
+    .puerta-card.kit { border-color: #c8e8e2; background: linear-gradient(180deg, #fff 70%, #f0faf8 100%); }
+
+    .puerta-icon { font-size: 36px; margin-bottom: 8px; }
+    .puerta-tag {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .puerta-card.b2c .puerta-tag { color: var(--rosa); }
+    .puerta-card.b2b2c .puerta-tag { color: var(--lavanda); }
+    .puerta-card.kit .puerta-tag { color: var(--teal); }
+    .puerta-titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px;
+      color: var(--azul);
+      margin-bottom: 6px;
+    }
+    .puerta-desc {
+      font-size: 12px;
+      color: var(--gris);
+      line-height: 1.5;
+      font-weight: 300;
+    }
+
+    /* Flujo principal */
+    .flujo-vertical {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .flujo-step {
+      background: white;
+      border-radius: 14px;
+      padding: 16px 20px;
+      box-shadow: 0 3px 12px rgba(44,62,125,0.06);
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 16px;
+      align-items: center;
+      border-left: 3px solid var(--lavanda);
+      transition: transform 0.2s;
+    }
+    .flujo-step:hover { transform: translateX(4px); }
+    .flujo-step.tutor { border-left-color: var(--lavanda); }
+    .flujo-step.nina { border-left-color: var(--rosa); }
+    .flujo-step.profesional { border-left-color: var(--teal); }
+    .flujo-step.sistema { border-left-color: var(--dorado); }
+
+    .flujo-num {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--lavanda), var(--azul));
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 16px;
+    }
+    .flujo-step.nina .flujo-num { background: linear-gradient(135deg, var(--rosa), #d97a8f); }
+    .flujo-step.profesional .flujo-num { background: linear-gradient(135deg, var(--teal), #4aa89e); }
+    .flujo-step.sistema .flujo-num { background: linear-gradient(135deg, var(--dorado), #b08e4d); }
+
+    .flujo-content { display: flex; flex-direction: column; gap: 2px; }
+    .flujo-tag {
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--lavanda);
+    }
+    .flujo-step.nina .flujo-tag { color: var(--rosa); }
+    .flujo-step.profesional .flujo-tag { color: var(--teal); }
+    .flujo-step.sistema .flujo-tag { color: var(--dorado); }
+    .flujo-titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px;
+      color: var(--azul);
+    }
+    .flujo-desc {
+      font-size: 12px;
+      color: var(--gris);
+      line-height: 1.5;
+      font-weight: 300;
+      margin-top: 2px;
+    }
+    .flujo-arrow-mini {
+      text-align: center;
+      color: var(--lavanda);
+      opacity: 0.5;
+      margin: -4px 0;
+      font-size: 14px;
+    }
+
+    /* Modos */
+    .modos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    @media (max-width: 700px) {
+      .modos-grid { grid-template-columns: 1fr; }
+    }
+
+    .modo-card {
+      background: white;
+      border-radius: 18px;
+      padding: 24px 22px;
+      box-shadow: 0 4px 16px rgba(44,62,125,0.07);
+      transition: transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .modo-card:hover { transform: translateY(-4px); }
+    .modo-banner {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--rosa), var(--lavanda));
+    }
+    .modo-card.todas .modo-banner { background: linear-gradient(90deg, var(--teal), #4aa89e); }
+    .modo-card.sens .modo-banner { background: linear-gradient(90deg, var(--dorado), #b08e4d); }
+
+    .modo-icon { font-size: 32px; margin-bottom: 8px; margin-top: 8px; }
+    .modo-nombre {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      color: var(--azul);
+      margin-bottom: 4px;
+    }
+    .modo-subnombre {
+      font-family: 'Dancing Script', cursive;
+      font-size: 16px;
+      color: var(--rosa);
+      margin-bottom: 12px;
+    }
+    .modo-card.todas .modo-subnombre { color: var(--teal); }
+    .modo-card.sens .modo-subnombre { color: var(--dorado); }
+
+    .modo-features {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .modo-features li {
+      font-size: 12px;
+      color: var(--gris);
+      padding: 6px 0;
+      border-bottom: 1px dashed #ede8f5;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      font-weight: 300;
+    }
+    .modo-features li:last-child { border-bottom: none; }
+    .modo-features li::before {
+      content: "✦";
+      color: var(--rosa);
+      flex-shrink: 0;
+    }
+    .modo-card.todas .modo-features li::before { color: var(--teal); }
+    .modo-card.sens .modo-features li::before { color: var(--dorado); }
+
+    /* Pantallas grid */
+    .pantallas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 14px;
+    }
+    .pantalla-card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 16px rgba(44,62,125,0.07);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .pantalla-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(44,62,125,0.12);
+    }
+    .pantalla-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+    }
+    .badge-nina { background: #ffe8f0; color: var(--rosa); }
+    .badge-tutor { background: #ede8ff; color: var(--lavanda); }
+    .badge-profesional { background: #e0f5f1; color: var(--teal); }
+    .badge-ambos { background: #fff4e0; color: var(--dorado); }
+    .badge-nuevo {
+      background: linear-gradient(135deg, var(--rosa), var(--lavanda));
+      color: white;
+      margin-left: 6px;
+    }
+
+    .pantalla-icon { font-size: 32px; margin-bottom: 8px; }
+    .pantalla-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px;
+      color: var(--azul);
+      margin-bottom: 6px;
+    }
+    .pantalla-desc {
+      font-size: 12px;
+      color: var(--gris);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+    .pantalla-features {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .feature-tag {
+      font-size: 10px;
+      background: var(--crema);
+      color: var(--azul);
+      padding: 2px 8px;
+      border-radius: 10px;
+      border: 1px solid #e8e0f0;
+    }
+
+    /* Sistema preguntas - estados */
+    .pregunta-flow {
+      background: white;
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 4px 20px rgba(44,62,125,0.08);
+      border-top: 4px solid var(--teal);
+    }
+
+    .estados-track {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin: 24px 0;
+      position: relative;
+    }
+    @media (max-width: 700px) {
+      .estados-track { grid-template-columns: 1fr 1fr; }
+    }
+
+    .estado-pill {
+      background: var(--crema);
+      border-radius: 12px;
+      padding: 14px 8px;
+      text-align: center;
+      border: 2px solid #ede8f5;
+      position: relative;
+    }
+    .estado-pill.activo {
+      background: linear-gradient(135deg, #fff5f7, #f7f5fc);
+      border-color: var(--rosa);
+    }
+    .estado-num {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 18px;
+      color: var(--lavanda);
+      opacity: 0.5;
+    }
+    .estado-icon { font-size: 22px; margin: 4px 0; }
+    .estado-nombre {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--azul);
+      letter-spacing: 0.5px;
+    }
+    .estado-tiempo {
+      font-size: 9px;
+      color: var(--gris);
+      margin-top: 2px;
+      font-weight: 300;
+    }
+
+    .pregunta-leyenda {
+      font-size: 12px;
+      color: var(--gris);
+      line-height: 1.6;
+      font-weight: 300;
+      margin-top: 16px;
+      padding: 14px 16px;
+      background: var(--crema);
+      border-radius: 10px;
+      border-left: 3px solid var(--teal);
+    }
+    .pregunta-leyenda strong {
+      color: var(--azul);
+      font-weight: 700;
+    }
+
+    /* Capa institucional */
+    .capa-institucional {
+      background: linear-gradient(135deg, #2c3e7d, #4a5ca0);
+      color: white;
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 8px 32px rgba(44,62,125,0.25);
+    }
+    .capa-titulo-blanco {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      color: white;
+      margin-bottom: 6px;
+    }
+    .capa-subtitulo-blanco {
+      font-size: 13px;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 24px;
+      font-weight: 300;
+    }
+
+    .capa-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+    }
+
+    .capa-card {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      border-radius: 14px;
+      padding: 18px;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .capa-card-icon { font-size: 26px; margin-bottom: 8px; }
+    .capa-card-titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: 14px;
+      color: white;
+      margin-bottom: 6px;
+    }
+    .capa-card-desc {
+      font-size: 11px;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.5;
+      font-weight: 300;
+    }
+
+    /* Mapeo Start-Up Chile */
+    .mapeo-tabla {
+      background: white;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(44,62,125,0.08);
+    }
+    .mapeo-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: linear-gradient(135deg, var(--rosa), var(--lavanda));
+      color: white;
+      padding: 14px 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .mapeo-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 16px 20px;
+      border-bottom: 1px solid #f0ebf5;
+      gap: 16px;
+    }
+    .mapeo-row:last-child { border-bottom: none; }
+    .mapeo-row:nth-child(even) { background: #fdfbf7; }
+
+    .mapeo-criterio {
+      font-size: 12px;
+      color: var(--gris);
+      font-weight: 300;
+    }
+    .mapeo-criterio strong {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      color: var(--rosa);
+      font-size: 13px;
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+    .mapeo-respuesta {
+      font-size: 12px;
+      color: var(--azul);
+      line-height: 1.5;
+    }
+    .mapeo-respuesta strong {
+      color: var(--teal);
+      font-weight: 700;
+    }
+    @media (max-width: 700px) {
+      .mapeo-header, .mapeo-row { grid-template-columns: 1fr; }
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 32px 0 0;
+      border-top: 1px solid #ede8f5;
+      animation: fadeUp 0.8s 0.7s ease both;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      color: var(--rosa);
+    }
+    .footer-logo span { color: var(--dorado); }
+    .footer-tagline {
+      font-family: 'Dancing Script', cursive;
+      font-size: 16px;
+      color: var(--teal);
+      margin-bottom: 12px;
+    }
+    .footer-text {
+      font-size: 12px;
+      color: var(--gris);
+      font-weight: 300;
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 640px) {
+      .logo { font-size: 36px; }
+      .tagline { font-size: 18px; }
+      .section-title { font-size: 20px; }
+      .intro-box { padding: 22px 20px; }
+      .capa-institucional { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="watercolor-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="blob blob-4"></div>
+  </div>
+
+  <div class="container">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">M<span>☽</span>N</div>
+      <div class="tagline">Nuestro primer ciclo</div>
+      <div class="header-divider"></div>
+      <div class="header-subtitle">Nueva Propuesta del Flujo</div>
+      <div class="version-badge">VERSIÓN 2 · MAYO 2026</div>
+    </div>
+
+    <!-- Intro ejecutivo -->
+    <div class="intro-box">
+      <div class="intro-title">Qué cambia y por qué</div>
+      <div class="intro-text">
+        Esta propuesta corrige cinco problemas estructurales del prototipo anterior y, al mismo tiempo, responde directamente al feedback de Start-Up Chile sobre escalabilidad, diferenciación y estrategia de crecimiento. <strong>La vinculación tutor-niña pasa a ser la columna vertebral</strong>, los tres modos de la app se hacen visibles desde el onboarding, el sistema de preguntas se rediseña con respaldo profesional real y estados visibles, el kit físico se integra al flujo digital, y se incorpora una capa institucional B2B2C que convierte a MUN en una plataforma FemTech, no solo en una app.
+      </div>
+    </div>
+
+    <!-- Decisiones estratégicas -->
+    <div class="section-block">
+      <div class="section-title">Decisiones estratégicas</div>
+      <div class="section-desc">Las cinco correcciones de fondo que reordenan toda la arquitectura</div>
+
+      <div class="decisiones-grid">
+        <div class="decision-card">
+          <div class="decision-num">01</div>
+          <div class="decision-title">Una app, tres modos</div>
+          <div class="decision-desc">Un solo codebase con modos visibles: Estándar, Para Todas (offline) y Sens (neurodivergente). Activación según contexto declarado en el onboarding.</div>
+        </div>
+
+        <div class="decision-card lavanda">
+          <div class="decision-num">02</div>
+          <div class="decision-title">Tutor primero, niña después</div>
+          <div class="decision-desc">El cuidador admin crea la cuenta familiar, autoriza legalmente a la menor de 14 años e invita por código. Hasta 3 tutores con uno como administrador.</div>
+        </div>
+
+        <div class="decision-card teal">
+          <div class="decision-num">03</div>
+          <div class="decision-title">Preguntas con red profesional</div>
+          <div class="decision-desc">Kinesiólogas, ginecólogas, terapeutas ocupacionales y nutricionistas responden preguntas reales en 48h, con estados visibles para la niña.</div>
+        </div>
+
+        <div class="decision-card dorado">
+          <div class="decision-num">04</div>
+          <div class="decision-title">Kit + app como sistema único</div>
+          <div class="decision-desc">Activación de la app por código del kit. Seguimiento de qué producto del kit alivió mejor los síntomas. Reposición integrada al e-commerce.</div>
+        </div>
+
+        <div class="decision-card azul">
+          <div class="decision-num">05</div>
+          <div class="decision-title">Capa institucional B2B2C</div>
+          <div class="decision-desc">Dashboards anonimizados para colegios, municipalidades y empresas. Datos poblacionales de salud adolescente temprana. Aquí está la escalabilidad.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Puertas de entrada -->
+    <div class="section-block">
+      <div class="section-title">Las tres puertas de entrada</div>
+      <div class="section-desc">Cómo llega un usuario a MUN — cada puerta abre el mismo producto pero activa un modelo de negocio distinto</div>
+
+      <div class="puertas-grid">
+        <div class="puerta-card b2c">
+          <div class="puerta-icon">📲</div>
+          <div class="puerta-tag">B2C · Directo</div>
+          <div class="puerta-titulo">Descarga libre</div>
+          <div class="puerta-desc">Modelo freemium. Acceso a contenido base y limited a una pregunta profesional al mes.</div>
+        </div>
+
+        <div class="puerta-card b2b2c">
+          <div class="puerta-icon">🏫</div>
+          <div class="puerta-tag">B2B2C · Institucional</div>
+          <div class="puerta-titulo">Código de colegio o municipalidad</div>
+          <div class="puerta-desc">Acceso premium pagado por la institución. Reportes anonimizados al colegio.</div>
+        </div>
+
+        <div class="puerta-card kit">
+          <div class="puerta-icon">📦</div>
+          <div class="puerta-tag">Físico + Digital</div>
+          <div class="puerta-titulo">Código del kit MUN</div>
+          <div class="puerta-desc">El kit físico activa la app premium. Refuerzo cruzado entre caja y plataforma.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flujo de onboarding -->
+    <div class="section-block">
+      <div class="section-title">Flujo de activación de la cuenta familiar</div>
+      <div class="section-desc">El nuevo orden: tutor admin → autorización legal → invitación → niña</div>
+
+      <div class="flujo-vertical">
+
+        <div class="flujo-step tutor">
+          <div class="flujo-num">1</div>
+          <div class="flujo-content">
+            <div class="flujo-tag">Tutor admin</div>
+            <div class="flujo-titulo">Registro y validación de identidad</div>
+            <div class="flujo-desc">Datos del adulto responsable. Validación de mayoría de edad. Selección de la puerta de entrada (directo / código institucional / código kit).</div>
+          </div>
+        </div>
+
+        <div class="flujo-arrow-mini">↓</div>
+
+        <div class="flujo-step tutor">
+          <div class="flujo-num">2</div>
+          <div class="flujo-content">
+            <div class="flujo-tag">Tutor admin</div>
+            <div class="flujo-titulo">Perfil clínico de la niña + selección de modo</div>
+            <div class="flujo-desc">Datos básicos, contextura, alergias, escolaridad. Tres preguntas guiadas activan el modo: Estándar / Para Todas / Sens.</div>
+          </div>
+        </div>
+
+        <div class="flujo-arrow-mini">↓</div>
+
+        <div class="flujo-step tutor">
+          <div class="flujo-num">3</div>
+          <div class="flujo-content">
+            <div class="flujo-tag">Tutor admin</div>
+            <div class="flujo-titulo">Consentimiento informado</div>
+            <div class="flujo-desc">Autorización legal para menores de 14 años. Términos de privacidad: el tutor entiende qué ve y qué no ve de la niña.</div>
+          </div>
+        </div>
+
+        <div class="flujo-arrow-mini">↓</div>
+
+        <div class="flujo-step tutor">
+          <div class="flujo-num">4</div>
+          <div class="flujo-content">
+            <div class="flujo-tag">Tutor admin</div>
+            <div class="flujo-titulo">Invitar tutores secundarios (opcional)</div>
+            <div class="flujo-desc">Hasta 2 tutores adicionales. El admin aprueba a cada uno y define qué tipo de notificaciones reciben.</div>
+          </div>
+        </div>
+
+        <div class="flujo-arrow-mini">↓</div>
+
+        <div class="flujo-step sistema">
+          <div class="flujo-num">5</div>
+          <div class="flujo-content">
+            <div class="flujo-tag">Sistema</div>
+            <div class="flujo-titulo">Generación de código de invitación para la niña</div>
+            <div class="flujo-desc">Código único de 6 caracteres + QR. Se entrega en persona al momento de regalar el kit o se envía por canal seguro.</div>
+          </div>
+        </div>
+
+        <div class="flujo-arrow-mini">↓</div>
+
+        <div class="flujo-step nina">
+          <div class="flujo-num">6</div>
+          <div class="flujo-content">
+            <div class="flujo-tag">Niña</div>
+            <div class="flujo-titulo">Ingresa con código y personaliza su Big Sister</div>
+            <div class="flujo-desc">Elige avatar, nombre de su acompañante virtual, paleta de colores (en modo Sens) o pictogramas. Su espacio, sus reglas.</div>
+          </div>
+        </div>
+
+        <div class="flujo-arrow-mini">↓</div>
+
+        <div class="flujo-step nina">
+          <div class="flujo-num">7</div>
+          <div class="flujo-content">
+            <div class="flujo-tag">Niña</div>
+            <div class="flujo-titulo">Encuesta lúdica + tour del Hub</div>
+            <div class="flujo-desc">Mantiene el enfoque visual del prototipo actual (mochilas, figuras corporales, productos). Termina con un recorrido por las funciones de Mi Ciclo.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Modos -->
+    <div class="section-block">
+      <div class="section-title">Los tres modos de MUN</div>
+      <div class="section-desc">No son tres apps. Son tres capas de adaptación dentro del mismo producto, activadas en el onboarding y editables después</div>
+
+      <div class="modos-grid">
+
+        <div class="modo-card">
+          <div class="modo-banner"></div>
+          <div class="modo-icon">🌸</div>
+          <div class="modo-nombre">MUN Estándar</div>
+          <div class="modo-subnombre">la base</div>
+          <ul class="modo-features">
+            <li>Lenguaje cálido y conversacional</li>
+            <li>Avatar Big Sister animado</li>
+            <li>Calendario y tracker completos</li>
+            <li>Acceso a red profesional</li>
+            <li>Seguimiento de productos del kit</li>
+            <li>Recordatorios contextuales</li>
+          </ul>
+        </div>
+
+        <div class="modo-card todas">
+          <div class="modo-banner"></div>
+          <div class="modo-icon">🌍</div>
+          <div class="modo-nombre">MUN Para Todas</div>
+          <div class="modo-subnombre">para contextos vulnerables</div>
+          <ul class="modo-features">
+            <li>Funciona offline (calendario + SOS)</li>
+            <li>Descarga gradual por etapa del ciclo</li>
+            <li>Lenguaje adaptado y accesible</li>
+            <li>Telemedicina gratuita integrada</li>
+            <li>Alertas de derivación a centros de salud</li>
+            <li>Despliegue vía colegios y municipios</li>
+          </ul>
+        </div>
+
+        <div class="modo-card sens">
+          <div class="modo-banner"></div>
+          <div class="modo-icon">✨</div>
+          <div class="modo-nombre">MUN Sens</div>
+          <div class="modo-subnombre">para neurodivergencia</div>
+          <ul class="modo-features">
+            <li>Pictogramas atravesando toda la app</li>
+            <li>Narración por voz de cada texto</li>
+            <li>Paleta de colores configurable</li>
+            <li>Sonidos suaves y opción silencio total</li>
+            <li>Respaldo de terapeuta ocupacional</li>
+            <li>Rutinas predecibles y anticipación</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Hub Niña + Hub Tutor + Hub Profesional -->
+    <div class="section-block">
+      <div class="section-title">Pantallas del prototipo v2</div>
+      <div class="section-desc">Lo que se mantiene, lo que se rediseña y lo nuevo</div>
+
+      <div class="pantallas-grid">
+
+        <div class="pantalla-card">
+          <span class="pantalla-badge badge-ambos">Ambos roles</span>
+          <div class="pantalla-icon">🚪</div>
+          <div class="pantalla-title">Login con tres puertas</div>
+          <div class="pantalla-desc">El primer paso pregunta cómo llega el usuario: descarga directa, código institucional o código del kit. Determina permisos, modelo y modo.</div>
+          <div class="pantalla-features">
+            <span class="feature-tag">3 puertas</span>
+            <span class="feature-tag">Activación contextual</span>
+            <span class="feature-tag">Validación de rol</span>
+          </div>
+        </div>
+
+        <div class="pantalla-card">
+          <span class="pantalla-badge badge-tutor">Tutor admin</span>
+          <span class="pantalla-badge badge-nuevo">Nuevo</span>
+          <div class="pantalla-icon">👨‍👩‍👧</div>
+          <div class="pantalla-title">Onboarding del Tutor Admin</div>
+          <div class="pantalla-desc">Crea la cuenta familiar, define perfil clínico de la niña, otorga consentimiento legal e invita tutores secundarios. Es el punto de entrada del modelo.</div>
+          <div class="pantalla-features">
+            <span class="feature-tag">Perfil clínico</span>
+            <span class="feature-tag">Consentimiento</span>
+            <span class="feature-tag">Multi-tutor</span>
+          </div>
+        </div>
+
+        <div class="pantalla-card">
+          <span class="pantalla-badge badge-tutor">Tutor admin</span>
+          <span class="pantalla-badge badge-nuevo">Nuevo</span>
+          <div class="pantalla-icon">🎯</div>
+          <div class="pantalla-title">Selección de modo guiada</div>
+          <div class="pantalla-desc">Tres preguntas del tipo "¿requiere apoyos sensoriales?" o "¿conexión estable?" activan automáticamente Estándar, Para Todas o Sens.</div>
+          <div class="pantalla-features">
+            <span class="feature-tag">3 preguntas</span>
+            <span class="feature-tag">Activación auto</span>
+            <span class="feature-tag">Editable después</span>
+          </div>
+        </div>
+
+        <div class="pantalla-card">
+          <span class="pantalla-badge badge-nina">Niña</span>
+          <div class="pantalla-icon">🔑</div>
+          <div class="pantalla-title">Ingreso con código de invitación</div>
+          <div class="pantalla-desc">Pantalla de bienvenida con código de 6 caracteres o QR. Después: personalización de la Big Sister y de su espacio.</div>
+          <div class="pantalla-features">
+            <span class="feature-tag">Código + QR</span>
+            <span class="feature-tag">Personalización</span>
+            <span class="feature-tag">Big Sister</span>
+          </div>
+        </div>
+
+        <div class="pantalla-card">
+          <span class="pantalla-badge badge-nina">Niña</span>
+          <div class="pantalla-icon">🏠</div>
+          <div class="pantalla-title">Mi Ciclo · Hub principal</div>
+          <div class="pantalla-desc">Calendario, slider de sangrado y mood, accesos a registro, preguntas y aprendizaje. Big Sister flotante. Nuevo: tarjeta SOS y Mi Kit.</div>
+          <div class="pantalla-features">
+            <span class="feature-tag">Calendario</span>
+            <span class="feature-tag">Tracker</span>
+            <span class="feature-tag">SOS offline</span>
+          </div>
+        </div>
+
+        <div class="pantalla-card">
+          <span class="pantalla-badge badge-nina">Niña</span>
+          <div class="pantalla-icon">🩺</div>
+          <div class="pantalla-title">Cómo me siento</div>
+          <div class="pantalla-desc">Tracker corporal con silueta, tipos de dolor (pinchazos, presión, retorcijones, fuego) y nivel emocional. Misma pantalla del prototipo actual.</div>
+          <div class="pantalla-features">
+            <span class="feature-tag">Silueta</span>
+            <span class="feature-tag">Tipos de dolor</span>
+            <span class="feature-tag">Mood</span>
+          </div>
+        </div>
+
+        <div class="pantalla-card">
+          <span class="pantalla-badge badge-nina">Niña</span>
+          <div class="pantalla-icon">🌸</div>
+          <div class="pantalla-title">Registro de hoy</div>
+          <div class="pantalla-desc">Huella dactilar del dolor con anillos concéntricos. Calendario navegable. Se mantiene tal como está en el prototipo actual.</div>
+          <div class="pantalla-features">
+            <span class="feature-tag">Rueda visual</span>
+            <span class="feature-tag">5 anillos</span>
+            <span class="feature-tag">Histórico</span>
+          </div>
+        </div>
+
+        <div class="pantalla-card">
+          <span class="pantalla-badge badge-nina">Niña</span>
+          <span class="pantalla-badge badge-nuevo">Rediseño</span>
+          <div class="pantalla-icon">💬</div>
+          <div class="pantalla-title">Pregúntale a un experto</div>
+          <div class="pantalla-desc">Reemplaza el "Chat con MUNI" actual. La niña escribe, el sistema modera, una profesional real responde en 48h. Estados visibles en todo momento.</div>
+          <div class="pantalla-features">
+            <span class="feature-tag">Anónimo</span>
+            <span class="feature-tag">Estados visibles</span>
+            <span class="feature-tag">Respuesta humana</span>
+          </div>
+        </div>
+
+        <div class="pantalla-card">
+          <span class="pantalla-badge badge-nina">Niña</span>
+          <span class="pantalla-badge badge-nuevo">Nuevo</span>
+          <div class="pantalla-icon">📦</div>
+          <div class="pantalla-title">Mi Kit</div>
+          <div class="pantalla-desc">Vínculo con el kit físico. Productos disponibles, cuál ayudó más, alerta de reposición y acceso al e-commerce. Datos clave para el estudio de mercado.</div>
+          <div class="pantalla-features">
+            <span class="feature-tag">Productos</span>
+            <span class="feature-tag">Reposición</span>
+            <span class="feature-tag">Feedback</span>
+          </div>
+        </div>
+
+        <div class="pantalla-card">
+          <span class="pantalla-badge badge-nina">Niña</span>
+          <div class="pantalla-icon">📚</div>
+          <div class="pantalla-title">Aprende & Diviértete</div>
+          <div class="pantalla-desc">Serie "Conoce tu cuerpo" en cápsulas: piso pélvico, hormonas, nutrición, sueño, ánimo, sexualidad temprana. Cuentos animados y nutrición.</div>
+          <div class="pantalla-features">
+            <span class="feature-tag">Serie por etapa</span>
+            <span class="feature-tag">Cuentos</span>
+            <span class="feature-tag">Nutrición</span>
+          </div>
+        </div>
+
+        <div class="pantalla-card">
+          <span class="pantalla-badge badge-nina">Niña</span>
+          <span class="pantalla-badge badge-nuevo">Nuevo</span>
+          <div class="pantalla-icon">🆘</div>
+          <div class="pantalla-title">SOS · Disponible offline</div>
+          <div class="pantalla-desc">Información crítica accesible sin internet: qué hacer ante sangrado abundante, dolor severo, primer ciclo. Telemedicina en modo Para Todas.</div>
+          <div class="pantalla-features">
+            <span class="feature-tag">Offline</span>
+            <span class="feature-tag">Telemedicina</span>
+            <span class="feature-tag">Crítico</span>
+          </div>
+        </div>
+
+        <div class="pantalla-card">
+          <span class="pantalla-badge badge-tutor">Tutor</span>
+          <span class="pantalla-badge badge-nuevo">Rediseño</span>
+          <div class="pantalla-icon">🤗</div>
+          <div class="pantalla-title">Acompaño · Hub del tutor</div>
+          <div class="pantalla-desc">Sin datos privados de la niña. Tips contextualizados al ciclo, alertas controladas (con consentimiento o por umbrales clínicos), gestión de tutores secundarios.</div>
+          <div class="pantalla-features">
+            <span class="feature-tag">Tips contextuales</span>
+            <span class="feature-tag">Alertas</span>
+            <span class="feature-tag">Multi-tutor</span>
+          </div>
+        </div>
+
+        <div class="pantalla-card">
+          <span class="pantalla-badge badge-tutor">Tutor</span>
+          <span class="pantalla-badge badge-nuevo">Nuevo</span>
+          <div class="pantalla-icon">📬</div>
+          <div class="pantalla-title">Recordatorios y reposición de kit</div>
+          <div class="pantalla-desc">El tutor recibe alertas de cuándo es buen momento para reponer toallitas, calzones menstruales o suministros del kit. Acceso al e-commerce de MUN.</div>
+          <div class="pantalla-features">
+            <span class="feature-tag">Reposición</span>
+            <span class="feature-tag">E-commerce</span>
+            <span class="feature-tag">Recordatorios</span>
+          </div>
+        </div>
+
+        <div class="pantalla-card">
+          <span class="pantalla-badge badge-profesional">Profesional</span>
+          <span class="pantalla-badge badge-nuevo">Nuevo</span>
+          <div class="pantalla-icon">👩‍⚕️</div>
+          <div class="pantalla-title">Bandeja de la profesional MUN</div>
+          <div class="pantalla-desc">Rol nuevo. Kinesiólogas, ginecólogas y terapeutas reciben preguntas asignadas según especialidad. Plantillas, historial, tiempos de respuesta.</div>
+          <div class="pantalla-features">
+            <span class="feature-tag">Rol nuevo</span>
+            <span class="feature-tag">Asignación</span>
+            <span class="feature-tag">Métricas SLA</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Sistema de preguntas con estados -->
+    <div class="section-block">
+      <div class="section-title">El sistema de preguntas, paso a paso</div>
+      <div class="section-desc">Esta es la feature estrella de MUN. Lo que diferencia a la app de cualquier tracker genérico</div>
+
+      <div class="pregunta-flow">
+        <div class="estados-track">
+          <div class="estado-pill activo">
+            <div class="estado-num">01</div>
+            <div class="estado-icon">✏️</div>
+            <div class="estado-nombre">Enviada</div>
+            <div class="estado-tiempo">Inmediato</div>
+          </div>
+          <div class="estado-pill">
+            <div class="estado-num">02</div>
+            <div class="estado-icon">🛡️</div>
+            <div class="estado-nombre">Moderada</div>
+            <div class="estado-tiempo">2 horas</div>
+          </div>
+          <div class="estado-pill">
+            <div class="estado-num">03</div>
+            <div class="estado-icon">👩‍⚕️</div>
+            <div class="estado-nombre">Asignada</div>
+            <div class="estado-tiempo">4 horas</div>
+          </div>
+          <div class="estado-pill">
+            <div class="estado-num">04</div>
+            <div class="estado-icon">📝</div>
+            <div class="estado-nombre">Editada</div>
+            <div class="estado-tiempo">24 horas</div>
+          </div>
+          <div class="estado-pill">
+            <div class="estado-num">05</div>
+            <div class="estado-icon">💌</div>
+            <div class="estado-nombre">Respondida</div>
+            <div class="estado-tiempo">48 horas</div>
+          </div>
+        </div>
+
+        <div class="pregunta-leyenda">
+          La niña ve <strong>el estado de su pregunta en todo momento</strong>. La moderación filtra preguntas inapropiadas (con respuesta tipo guardada) y deriva las clínicamente sensibles a la especialidad correcta. La edición la hace el equipo MUN antes de enviar la respuesta. Cada pregunta respondida se archiva (anonimizada) en el banco de FAQ. <strong>Esta capa profesional es la barrera de entrada competitiva</strong> y el activo que justifica el modelo institucional.
+        </div>
+      </div>
+    </div>
+
+    <!-- Capa institucional -->
+    <div class="section-block">
+      <div class="capa-institucional">
+        <div class="capa-titulo-blanco">La capa que el comité de Start-Up Chile no vio</div>
+        <div class="capa-subtitulo-blanco">Lo que está detrás del producto y vuelve a MUN una plataforma escalable, no solo una app</div>
+
+        <div class="capa-grid">
+          <div class="capa-card">
+            <div class="capa-card-icon">🏫</div>
+            <div class="capa-card-titulo">Dashboard de colegios</div>
+            <div class="capa-card-desc">Datos anonimizados sobre ausentismo escolar por menstruación, conocimiento del ciclo y bienestar emocional de las niñas de la institución.</div>
+          </div>
+          <div class="capa-card">
+            <div class="capa-card-icon">🏛️</div>
+            <div class="capa-card-titulo">Dashboard municipal</div>
+            <div class="capa-card-desc">Indicadores poblacionales para políticas públicas: edad de menarquia, brechas socioeconómicas en salud menstrual, derivaciones a centros de salud.</div>
+          </div>
+          <div class="capa-card">
+            <div class="capa-card-icon">💼</div>
+            <div class="capa-card-titulo">Beneficio para empresas</div>
+            <div class="capa-card-desc">MUN como beneficio de bienestar para empleadas con hijas. Reduce el estrés parental asociado a la primera menstruación.</div>
+          </div>
+          <div class="capa-card">
+            <div class="capa-card-icon">📊</div>
+            <div class="capa-card-titulo">Data intelligence agregada</div>
+            <div class="capa-card-desc">Insights anonimizados sobre salud adolescente temprana: el activo más valioso para alianzas con marcas, ministerios y aseguradoras.</div>
+          </div>
+          <div class="capa-card">
+            <div class="capa-card-icon">⚠️</div>
+            <div class="capa-card-titulo">Alertas tempranas</div>
+            <div class="capa-card-desc">Detección de patrones irregulares (sangrado excesivo, ciclos disruptivos) que escalan al tutor o derivan a telemedicina.</div>
+          </div>
+          <div class="capa-card">
+            <div class="capa-card-icon">🌎</div>
+            <div class="capa-card-titulo">Expansión LATAM</div>
+            <div class="capa-card-desc">Chile como mercado de validación. La arquitectura está diseñada para replicar en México, Colombia, Perú y mercados de habla hispana en Europa.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mapeo Start-Up Chile -->
+    <div class="section-block">
+      <div class="section-title">Cómo este flujo responde a Start-Up Chile</div>
+      <div class="section-desc">Cada cambio del flujo se conecta con un criterio donde MUN obtuvo nota baja</div>
+
+      <div class="mapeo-tabla">
+        <div class="mapeo-header">
+          <div>Crítica del comité</div>
+          <div>Respuesta del flujo v2</div>
+        </div>
+
+        <div class="mapeo-row">
+          <div class="mapeo-criterio">
+            <strong>Diferenciación poco clara</strong>
+            "Oportunidades de mejora en diferenciación, ventajas competitivas y propuesta de valor"
+          </div>
+          <div class="mapeo-respuesta">
+            Tres modos visibles (Estándar / Para Todas / Sens) + red profesional con SLA de 48h. <strong>Ninguna competidora atiende neurodivergencia, vulnerabilidad y estándar simultáneamente con respaldo profesional real.</strong>
+          </div>
+        </div>
+
+        <div class="mapeo-row">
+          <div class="mapeo-criterio">
+            <strong>Estrategia de crecimiento (3.0)</strong>
+            "Falta claridad sobre cómo aprovechará las oportunidades del contexto chileno"
+          </div>
+          <div class="mapeo-respuesta">
+            Tres puertas de entrada: B2C freemium, B2B2C institucional (colegios y municipalidades), y kit físico activador. <strong>Chile como mercado de validación, expansión LATAM en arquitectura.</strong>
+          </div>
+        </div>
+
+        <div class="mapeo-row">
+          <div class="mapeo-criterio">
+            <strong>Escalabilidad (3.33)</strong>
+            "No se ve cómo crece la base de usuarios"
+          </div>
+          <div class="mapeo-respuesta">
+            La unidad familiar (1 admin + hasta 3 tutores + 1 niña) es la unidad de monetización SaaS. <strong>Despliegue institucional escala 1 contrato → cientos o miles de cuentas.</strong>
+          </div>
+        </div>
+
+        <div class="mapeo-row">
+          <div class="mapeo-criterio">
+            <strong>Potencial de crecimiento (3.17)</strong>
+            "Visto más como proyecto social que startup tecnológica"
+          </div>
+          <div class="mapeo-respuesta">
+            Capa de data intelligence agregada y dashboards institucionales convierten a MUN en plataforma de datos de salud adolescente. <strong>El producto social es el frontend, el negocio es el backend.</strong>
+          </div>
+        </div>
+
+        <div class="mapeo-row">
+          <div class="mapeo-criterio">
+            <strong>Falta evidencia de demanda</strong>
+            "Métricas tempranas, validación, pilotos"
+          </div>
+          <div class="mapeo-respuesta">
+            Flujo diseñado para activar piloto institucional con un colegio en 30 días. <strong>El sistema de preguntas con SLA y la integración con kit generan métricas concretas desde el día 1.</strong>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="footer-logo">M<span>☽</span>N</div>
+      <div class="footer-tagline">Nuestro primer ciclo</div>
+      <div class="footer-text">Propuesta del flujo v2 · Mayo 2026<br>Construida sobre el prototipo Ionic + Angular existente<br>Josefa Fica Ávila · @mun_box</div>
+    </div>
+
+  </div>
+</body>
+</html>
