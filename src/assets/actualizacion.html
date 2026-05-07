@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MUN SENS — Propuesta Estratégica · Reposicionamiento</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --rosa: #e8909f;
+      --lavanda: #9b8ec4;
+      --teal: #5bbfb5;
+      --azul: #2c3e7d;
+      --crema: #fdfaf5;
+      --gris: #666;
+      --dorado: #c9a96e;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--crema);
+      color: var(--azul);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    .watercolor-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+    }
+    .blob-1 { width: 400px; height: 350px; background: #c4b5e0; opacity: 0.22; top: -100px; left: -80px; animation: float1 9s ease-in-out infinite alternate; }
+    .blob-2 { width: 300px; height: 350px; background: #e8a48a; opacity: 0.18; top: 30%; left: -60px; animation: float2 11s ease-in-out infinite alternate; }
+    .blob-3 { width: 350px; height: 300px; background: #6070c0; opacity: 0.14; top: 55%; right: -60px; animation: float3 8s ease-in-out infinite alternate; }
+    .blob-4 { width: 280px; height: 280px; background: #5bbfb5; opacity: 0.12; bottom: 5%; left: 30%; animation: float1 10s ease-in-out infinite alternate; }
+
+    @keyframes float1 { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(20px,15px) scale(1.05); } }
+    @keyframes float2 { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(-10px,20px) scale(1.04); } }
+    @keyframes float3 { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(15px,-10px) scale(1.06); } }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 32px 16px 80px;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      animation: fadeDown 0.8s ease both;
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 44px;
+      color: var(--rosa);
+      letter-spacing: 4px;
+      line-height: 1;
+    }
+    .logo span { color: var(--dorado); }
+    .tagline {
+      font-family: 'Dancing Script', cursive;
+      font-size: 22px;
+      color: var(--teal);
+      margin-top: 4px;
+    }
+    .header-divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(to right, var(--rosa), var(--lavanda));
+      margin: 16px auto;
+      border-radius: 2px;
+    }
+    .header-subtitle {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      color: var(--azul);
+      letter-spacing: 1px;
+    }
+    .version-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--rosa), var(--lavanda));
+      color: white;
+      font-size: 11px;
+      letter-spacing: 2px;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-top: 12px;
+      font-weight: 700;
+    }
+
+    /* Section base */
+    .section {
+      margin-bottom: 56px;
+      animation: fadeUp 0.8s ease both;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      color: var(--azul);
+      margin-bottom: 4px;
+    }
+    .section-subtitle {
+      font-size: 13px;
+      color: var(--gris);
+      margin-bottom: 24px;
+      font-weight: 300;
+      font-style: italic;
+    }
+    .section-number {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 14px;
+      color: var(--rosa);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    /* Card base */
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 28px 32px;
+      box-shadow: 0 4px 20px rgba(44,62,125,0.08);
+      margin-bottom: 16px;
+    }
+
+    /* Resumen ejecutivo */
+    .resumen-box {
+      background: linear-gradient(135deg, #fff 0%, #fdf5f7 100%);
+      border-radius: 22px;
+      padding: 36px;
+      box-shadow: 0 4px 24px rgba(44,62,125,0.08);
+      border-top: 5px solid var(--rosa);
+      margin-bottom: 16px;
+    }
+    .resumen-frase {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      line-height: 1.5;
+      color: var(--azul);
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+    .resumen-frase strong {
+      font-style: normal;
+      color: var(--rosa);
+      font-weight: 700;
+    }
+    .resumen-texto {
+      font-size: 14px;
+      color: var(--gris);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+    .resumen-texto strong {
+      color: var(--azul);
+      font-weight: 700;
+    }
+
+    /* Pilares */
+    .pilares-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+    @media (max-width: 700px) {
+      .pilares-grid { grid-template-columns: 1fr; }
+    }
+    .pilar-card {
+      background: white;
+      border-radius: 16px;
+      padding: 22px 24px;
+      box-shadow: 0 3px 14px rgba(44,62,125,0.07);
+      border-left: 4px solid var(--rosa);
+      transition: transform 0.2s;
+    }
+    .pilar-card:hover { transform: translateY(-3px); }
+    .pilar-card.lavanda { border-left-color: var(--lavanda); }
+    .pilar-card.teal { border-left-color: var(--teal); }
+    .pilar-card.dorado { border-left-color: var(--dorado); }
+
+    .pilar-num {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 32px;
+      color: var(--rosa);
+      opacity: 0.5;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .pilar-card.lavanda .pilar-num { color: var(--lavanda); }
+    .pilar-card.teal .pilar-num { color: var(--teal); }
+    .pilar-card.dorado .pilar-num { color: var(--dorado); }
+
+    .pilar-titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      color: var(--azul);
+      margin-bottom: 8px;
+    }
+    .pilar-texto {
+      font-size: 13px;
+      color: var(--gris);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+    .pilar-texto strong {
+      color: var(--azul);
+      font-weight: 700;
+    }
+
+    /* Diagnóstico tabla */
+    .diagnostico-tabla {
+      background: white;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(44,62,125,0.08);
+    }
+    .diag-header {
+      background: linear-gradient(135deg, var(--rosa), var(--lavanda));
+      color: white;
+      padding: 14px 24px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 14px;
+    }
+    .diag-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 14px;
+      padding: 14px 24px;
+      border-bottom: 1px solid #f0ebf5;
+      font-size: 12px;
+      align-items: center;
+    }
+    .diag-row:last-child { border-bottom: none; }
+    .diag-row:nth-child(even) { background: #fdfbf7; }
+    .diag-criterio { font-weight: 700; color: var(--azul); }
+    .diag-nota {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+      text-align: center;
+    }
+    .diag-nota.baja { color: var(--rosa); }
+    .diag-nota.media { color: var(--dorado); }
+    .diag-nota.alta { color: var(--teal); }
+    .diag-promedio {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      color: var(--gris);
+      text-align: center;
+      font-weight: 300;
+    }
+    .diag-respuesta {
+      font-size: 11px;
+      color: var(--azul);
+      line-height: 1.5;
+    }
+    @media (max-width: 700px) {
+      .diag-header, .diag-row { grid-template-columns: 1fr; gap: 4px; }
+      .diag-nota, .diag-promedio { text-align: left; }
+    }
+
+    /* Antes / Ahora */
+    .pivot-grid {
+      display: grid;
+      grid-template-columns: 1fr 80px 1fr;
+      gap: 0;
+      align-items: stretch;
+    }
+    @media (max-width: 700px) {
+      .pivot-grid { grid-template-columns: 1fr; }
+      .pivot-arrow { display: none; }
+    }
+    .pivot-col {
+      background: white;
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 3px 14px rgba(44,62,125,0.07);
+    }
+    .pivot-col.antes {
+      border-top: 4px solid #d0c8d8;
+      opacity: 0.85;
+    }
+    .pivot-col.ahora {
+      border-top: 4px solid var(--rosa);
+    }
+    .pivot-tag {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .pivot-col.antes .pivot-tag { color: #999; }
+    .pivot-col.ahora .pivot-tag { color: var(--rosa); }
+    .pivot-titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      color: var(--azul);
+      margin-bottom: 12px;
+      font-style: italic;
+    }
+    .pivot-col.antes .pivot-titulo {
+      text-decoration: line-through;
+      color: #999;
+    }
+    .pivot-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .pivot-list li {
+      font-size: 13px;
+      padding: 6px 0;
+      color: var(--gris);
+      font-weight: 300;
+      line-height: 1.5;
+      border-bottom: 1px dashed #ede8f5;
+    }
+    .pivot-list li:last-child { border-bottom: none; }
+    .pivot-col.ahora .pivot-list li {
+      color: var(--azul);
+    }
+    .pivot-col.ahora .pivot-list li::before {
+      content: "✦ ";
+      color: var(--rosa);
+    }
+    .pivot-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      color: var(--lavanda);
+    }
+
+    /* Capas del modelo */
+    .capas-container {
+      background: linear-gradient(135deg, #2c3e7d, #4a5ca0);
+      color: white;
+      border-radius: 22px;
+      padding: 40px 36px;
+      box-shadow: 0 8px 32px rgba(44,62,125,0.25);
+    }
+    .capas-titulo-blanco {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      color: white;
+      margin-bottom: 6px;
+    }
+    .capas-subtitulo-blanco {
+      font-size: 13px;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 28px;
+      font-weight: 300;
+      font-style: italic;
+    }
+    .capa-bloque {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      border-radius: 14px;
+      padding: 18px 22px;
+      margin-bottom: 10px;
+      border: 1px solid rgba(255,255,255,0.12);
+      display: grid;
+      grid-template-columns: 50px 1fr;
+      gap: 16px;
+      align-items: center;
+    }
+    .capa-numero {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 30px;
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+    }
+    .capa-titulo-card {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      color: white;
+      margin-bottom: 4px;
+    }
+    .capa-desc-card {
+      font-size: 12px;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.55;
+      font-weight: 300;
+    }
+    .capa-tipo {
+      display: inline-block;
+      font-size: 9px;
+      background: rgba(255,255,255,0.18);
+      padding: 2px 8px;
+      border-radius: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 6px;
+      font-weight: 700;
+    }
+
+    /* Diferenciación */
+    .dif-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .dif-card {
+      background: white;
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 3px 14px rgba(44,62,125,0.07);
+      text-align: center;
+    }
+    .dif-icon { font-size: 32px; margin-bottom: 8px; }
+    .dif-titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: 14px;
+      color: var(--azul);
+      margin-bottom: 8px;
+    }
+    .dif-desc {
+      font-size: 11px;
+      color: var(--gris);
+      line-height: 1.5;
+      font-weight: 300;
+    }
+
+    /* Tabla competencia */
+    .comp-tabla {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(44,62,125,0.08);
+      font-size: 12px;
+    }
+    .comp-grid {
+      display: grid;
+      grid-template-columns: 1.6fr repeat(5, 1fr);
+    }
+    .comp-cell {
+      padding: 12px 10px;
+      border-bottom: 1px solid #f0ebf5;
+      border-right: 1px solid #f7f3fa;
+      text-align: center;
+    }
+    .comp-cell:last-child { border-right: none; }
+    .comp-header {
+      background: linear-gradient(135deg, var(--rosa), var(--lavanda));
+      color: white;
+      font-weight: 700;
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .comp-row-label {
+      text-align: left;
+      font-weight: 700;
+      color: var(--azul);
+      background: #fdfbf7;
+      padding-left: 16px;
+    }
+    .comp-mun { background: #fdf5f7; font-weight: 700; }
+    .check { color: var(--teal); font-size: 16px; }
+    .cross { color: #d0c8d8; font-size: 16px; }
+    .partial { color: var(--dorado); font-size: 14px; }
+    @media (max-width: 700px) {
+      .comp-grid { font-size: 10px; }
+      .comp-cell { padding: 8px 4px; }
+    }
+
+    /* Mercado */
+    .mercado-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    @media (max-width: 700px) {
+      .mercado-grid { grid-template-columns: 1fr; }
+    }
+    .mercado-card {
+      background: white;
+      border-radius: 16px;
+      padding: 22px;
+      text-align: center;
+      box-shadow: 0 3px 14px rgba(44,62,125,0.07);
+      border-top: 4px solid var(--rosa);
+    }
+    .mercado-card.sam { border-top-color: var(--lavanda); }
+    .mercado-card.som { border-top-color: var(--teal); }
+    .mercado-tag {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--rosa);
+      margin-bottom: 4px;
+    }
+    .mercado-card.sam .mercado-tag { color: var(--lavanda); }
+    .mercado-card.som .mercado-tag { color: var(--teal); }
+    .mercado-numero {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      color: var(--azul);
+      margin: 4px 0;
+      font-weight: 700;
+    }
+    .mercado-label {
+      font-size: 11px;
+      color: var(--gris);
+      font-weight: 300;
+    }
+    .mercado-desc {
+      font-size: 11px;
+      color: var(--gris);
+      margin-top: 8px;
+      font-weight: 300;
+      line-height: 1.4;
+    }
+
+    /* Roadmap */
+    .roadmap-fase {
+      background: white;
+      border-radius: 16px;
+      padding: 22px 26px;
+      box-shadow: 0 3px 14px rgba(44,62,125,0.07);
+      margin-bottom: 12px;
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 22px;
+      align-items: start;
+    }
+    @media (max-width: 700px) {
+      .roadmap-fase { grid-template-columns: 1fr; }
+    }
+    .roadmap-fecha {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: var(--rosa);
+      font-size: 14px;
+      line-height: 1.3;
+      font-weight: 700;
+    }
+    .roadmap-fase.f2 .roadmap-fecha { color: var(--lavanda); }
+    .roadmap-fase.f3 .roadmap-fecha { color: var(--teal); }
+    .roadmap-fase.f4 .roadmap-fecha { color: var(--dorado); }
+    .roadmap-titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      color: var(--azul);
+      margin-bottom: 6px;
+    }
+    .roadmap-desc {
+      font-size: 13px;
+      color: var(--gris);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+    .roadmap-tags {
+      margin-top: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .roadmap-tag {
+      font-size: 10px;
+      background: var(--crema);
+      color: var(--azul);
+      padding: 3px 10px;
+      border-radius: 10px;
+      border: 1px solid #e8e0f0;
+      font-weight: 700;
+    }
+
+    /* Equipo */
+    .equipo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .persona-card {
+      background: white;
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 3px 14px rgba(44,62,125,0.07);
+      border-top: 3px solid var(--rosa);
+    }
+    .persona-card.advisor {
+      border-top-color: var(--teal);
+      background: linear-gradient(180deg, white 70%, #f0faf8 100%);
+    }
+    .persona-card.por-sumar {
+      border-top-color: var(--lavanda);
+      border-style: dashed;
+      background: #fdfbff;
+      opacity: 0.85;
+    }
+    .persona-rol {
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--rosa);
+      margin-bottom: 4px;
+    }
+    .persona-card.advisor .persona-rol { color: var(--teal); }
+    .persona-card.por-sumar .persona-rol { color: var(--lavanda); }
+    .persona-nombre {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      color: var(--azul);
+      margin-bottom: 8px;
+    }
+    .persona-bio {
+      font-size: 12px;
+      color: var(--gris);
+      line-height: 1.55;
+      font-weight: 300;
+    }
+
+    /* Métricas */
+    .metricas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 14px;
+    }
+    .metrica-card {
+      background: white;
+      border-radius: 14px;
+      padding: 20px 18px;
+      text-align: center;
+      box-shadow: 0 3px 14px rgba(44,62,125,0.07);
+    }
+    .metrica-numero {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      color: var(--rosa);
+      font-weight: 700;
+      line-height: 1.1;
+    }
+    .metrica-label {
+      font-size: 11px;
+      color: var(--gris);
+      margin-top: 4px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .metrica-detalle {
+      font-size: 10px;
+      color: var(--gris);
+      margin-top: 6px;
+      font-weight: 300;
+      line-height: 1.4;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 32px 0 0;
+      border-top: 1px solid #ede8f5;
+      animation: fadeUp 0.8s 0.7s ease both;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      color: var(--rosa);
+    }
+    .footer-logo span { color: var(--dorado); }
+    .footer-tagline {
+      font-family: 'Dancing Script', cursive;
+      font-size: 16px;
+      color: var(--teal);
+      margin-bottom: 12px;
+    }
+    .footer-text {
+      font-size: 12px;
+      color: var(--gris);
+      font-weight: 300;
+      line-height: 1.6;
+    }
+    .footer-text strong {
+      color: var(--azul);
+      font-weight: 700;
+    }
+
+    /* Quote box */
+    .quote-box {
+      background: linear-gradient(135deg, #fff5f7, #f7f5fc);
+      border-radius: 16px;
+      padding: 24px 28px;
+      border-left: 4px solid var(--rosa);
+      margin: 16px 0;
+    }
+    .quote-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 15px;
+      color: var(--azul);
+      line-height: 1.6;
+    }
+    .quote-author {
+      font-size: 11px;
+      color: var(--gris);
+      margin-top: 8px;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 640px) {
+      .logo { font-size: 36px; }
+      .tagline { font-size: 18px; }
+      .section-title { font-size: 22px; }
+      .resumen-frase { font-size: 18px; }
+      .resumen-box, .capas-container { padding: 24px 22px; }
+      .card { padding: 22px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="watercolor-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="blob blob-4"></div>
+  </div>
+
+  <div class="container">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">M<span>☽</span>N</div>
+      <div class="tagline">Nuestro primer ciclo</div>
+      <div class="header-divider"></div>
+      <div class="header-subtitle">Propuesta Estratégica · Reposicionamiento</div>
+      <div class="version-badge">MUN SENS SPA · MAYO 2026</div>
+    </div>
+
+    <!-- 01 — Resumen ejecutivo -->
+    <div class="section">
+      <div class="section-number">01 · Resumen ejecutivo</div>
+      <div class="section-title">Lo que cambia y por qué</div>
+      <div class="section-subtitle">El reposicionamiento que vuelve a MUN SENS una empresa invertible</div>
+
+      <div class="resumen-box">
+        <div class="resumen-frase">
+          <strong>MUN SENS</strong> es una plataforma SaaS de infraestructura femtech inclusiva que permite a colegios, municipalidades y empresas acompañar la primera menstruación de niñas neurodivergentes con respaldo profesional, software accesible y kits físicos curados por datos.
+        </div>
+        <div class="resumen-texto">
+          Esta propuesta corrige cinco problemas estructurales detectados en la postulación rechazada a Start-Up Chile Build 11 (código 25BLD-310332) y reposiciona a MUN SENS desde <strong>"startup de cajas menstruales"</strong> hacia <strong>"plataforma de infraestructura femtech inclusiva"</strong>. El cambio no es cosmético: transforma la valuación potencial, la narrativa de inversión, la percepción tecnológica y la probabilidad de admisión en programas de aceleración. La identidad construida en el ecosistema clínico-educativo de neurodivergencia es un activo difícil de copiar, y en etapas tempranas vale más que abarcar todo.
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 — Diagnóstico Build 11 -->
+    <div class="section">
+      <div class="section-number">02 · Diagnóstico</div>
+      <div class="section-title">Lo que dijo Start-Up Chile, traducido</div>
+      <div class="section-subtitle">El rechazo no fue por problema, ni por idea, ni por tecnología. Fue por narrativa.</div>
+
+      <div class="diagnostico-tabla">
+        <div class="diag-header">
+          <div>Criterio</div>
+          <div>Nota MUN</div>
+          <div>Promedio aprobados</div>
+          <div>Diagnóstico</div>
+        </div>
+        <div class="diag-row">
+          <div class="diag-criterio">Oportunidad de mercado</div>
+          <div class="diag-nota alta">5.00</div>
+          <div class="diag-promedio">5.64</div>
+          <div class="diag-respuesta">Cerca del corte. El problema fue validado.</div>
+        </div>
+        <div class="diag-row">
+          <div class="diag-criterio">Impacto en Chile</div>
+          <div class="diag-nota alta">4.67</div>
+          <div class="diag-promedio">5.67</div>
+          <div class="diag-respuesta">Falta evidencia local: pilotos, LOIs, alianzas.</div>
+        </div>
+        <div class="diag-row">
+          <div class="diag-criterio">Producto y diferenciación</div>
+          <div class="diag-nota media">4.00</div>
+          <div class="diag-promedio">5.45</div>
+          <div class="diag-respuesta">Diferenciación poco clara para inversionistas.</div>
+        </div>
+        <div class="diag-row">
+          <div class="diag-criterio">Tracción comercial</div>
+          <div class="diag-nota media">4.00</div>
+          <div class="diag-promedio">5.24</div>
+          <div class="diag-respuesta">Sin métricas tempranas que mostrar.</div>
+        </div>
+        <div class="diag-row">
+          <div class="diag-criterio">Equipo y participantes</div>
+          <div class="diag-nota media">4.33</div>
+          <div class="diag-promedio">5.86</div>
+          <div class="diag-respuesta">Falta profundidad y advisors visibles.</div>
+        </div>
+        <div class="diag-row">
+          <div class="diag-criterio">Escalabilidad</div>
+          <div class="diag-nota baja">3.33</div>
+          <div class="diag-promedio">5.22</div>
+          <div class="diag-respuesta">Modelo kit-first no escala como SaaS.</div>
+        </div>
+        <div class="diag-row">
+          <div class="diag-criterio">Estrategia de crecimiento</div>
+          <div class="diag-nota baja">3.00</div>
+          <div class="diag-promedio">5.21</div>
+          <div class="diag-respuesta">La herida principal: −2.21 puntos.</div>
+        </div>
+        <div class="diag-row" style="background:#fdf5f7;">
+          <div class="diag-criterio" style="color:var(--rosa);">Nota final</div>
+          <div class="diag-nota baja">4.03</div>
+          <div class="diag-promedio">5.49</div>
+          <div class="diag-respuesta" style="font-weight:700;">Brecha a cerrar: +1.46 puntos.</div>
+        </div>
+      </div>
+
+      <div class="quote-box" style="margin-top: 20px;">
+        <div class="quote-text">
+          "El producto o servicio resuelve de forma satisfactoria la necesidad identificada y presenta innovación con base tecnológica. Se identifican oportunidades de mejora en diferenciación, ventajas competitivas o claridad de la propuesta de valor, que podrían fortalecer su atractivo para potenciales inversionistas."
+        </div>
+        <div class="quote-author">— Carta de evaluación Start-Up Chile · 20-01-2026</div>
+      </div>
+    </div>
+
+    <!-- 03 — El pivote -->
+    <div class="section">
+      <div class="section-number">03 · El pivote</div>
+      <div class="section-title">De producto físico a plataforma SaaS</div>
+      <div class="section-subtitle">El cambio de modelo que mueve cada nota baja simultáneamente</div>
+
+      <div class="pivot-grid">
+        <div class="pivot-col antes">
+          <div class="pivot-tag">Antes · Build 11</div>
+          <div class="pivot-titulo">Startup de cajas menstruales</div>
+          <ul class="pivot-list">
+            <li>Kit físico como núcleo del modelo</li>
+            <li>App como complemento del kit</li>
+            <li>B2C transaccional (venta única)</li>
+            <li>Logística, courier, materia prima</li>
+            <li>Tres versiones disueltas en una</li>
+            <li>Equipo de 2 sobrecargado</li>
+            <li>Crecimiento por unidades vendidas</li>
+          </ul>
+        </div>
+        <div class="pivot-arrow">→</div>
+        <div class="pivot-col ahora">
+          <div class="pivot-tag">Ahora · MUN SENS SPA</div>
+          <div class="pivot-titulo">Infraestructura femtech inclusiva</div>
+          <ul class="pivot-list">
+            <li>Plataforma SaaS como núcleo del modelo</li>
+            <li>Licenciamiento B2B y B2G por unidad familiar</li>
+            <li>Kit como producto premium opcional</li>
+            <li>Costo marginal cercano a cero</li>
+            <li>Foco específico: niñas neurodivergentes</li>
+            <li>Equipo dimensionado al modelo digital</li>
+            <li>Crecimiento por contratos institucionales</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 — Las cuatro capas -->
+    <div class="section">
+      <div class="section-number">04 · El modelo de cuatro capas</div>
+      <div class="section-title">Lo que el comité no vio en la primera postulación</div>
+      <div class="section-subtitle">Cuatro líneas de ingreso ordenadas por madurez y costo de implementación</div>
+
+      <div class="capas-container">
+        <div class="capas-titulo-blanco">Arquitectura del modelo</div>
+        <div class="capas-subtitulo-blanco">El producto social es el frontend. El negocio es el backend.</div>
+
+        <div class="capa-bloque">
+          <div class="capa-numero">01</div>
+          <div>
+            <div class="capa-titulo-card">Plataforma SaaS B2B · Colegios PIE</div>
+            <div class="capa-desc-card">Licencia anual por institución. Cada colegio recibe activaciones para todas sus alumnas en edad de menarquia, dashboard anonimizado para orientación y datos para programas socioemocionales. <strong style="color:white">Canal primario en validación corta (3-9 meses).</strong></div>
+            <div class="capa-tipo">Recurrente · Núcleo del modelo</div>
+          </div>
+        </div>
+
+        <div class="capa-bloque">
+          <div class="capa-numero">02</div>
+          <div>
+            <div class="capa-titulo-card">Plataforma SaaS B2G · Municipios y ministerios</div>
+            <div class="capa-desc-card">Licencias por volumen para programas municipales de salud adolescente y MINEDUC. Despliegue en escuelas especiales y centros terapéuticos públicos. Datos poblacionales para política pública. <strong style="color:white">Canal de expansión a 24-36 meses.</strong></div>
+            <div class="capa-tipo">Recurrente · Alto ticket</div>
+          </div>
+        </div>
+
+        <div class="capa-bloque">
+          <div class="capa-numero">03</div>
+          <div>
+            <div class="capa-titulo-card">App freemium B2C</div>
+            <div class="capa-desc-card">Acceso libre a contenido base + 1 pregunta profesional al mes. Validación temprana, base de waitlist y captura de demanda en familias sin acceso institucional. <strong style="color:white">Canal de validación y marketing orgánico.</strong></div>
+            <div class="capa-tipo">Validación · Bajo costo</div>
+          </div>
+        </div>
+
+        <div class="capa-bloque">
+          <div class="capa-numero">04</div>
+          <div>
+            <div class="capa-titulo-card">Kit físico premium · Curado por datos</div>
+            <div class="capa-desc-card">Producto opcional comprable desde la app. La app llega primero, recoge datos sensoriales y de preferencia, y luego el kit se entrega personalizado. <strong style="color:white">Margen alto sin obligación logística masiva.</strong></div>
+            <div class="capa-tipo">Premium · Opcional</div>
+          </div>
+        </div>
+
+        <div class="capa-bloque">
+          <div class="capa-numero">05</div>
+          <div>
+            <div class="capa-titulo-card">Data intelligence layer</div>
+            <div class="capa-desc-card">Insights anonimizados sobre menarquia neurodivergente: edad, sintomatología, brechas socioeconómicas, ausentismo escolar. Activo invisible que respalda alianzas con marcas, aseguradoras y ministerios. <strong style="color:white">Activo de largo plazo · diferencial competitivo.</strong></div>
+            <div class="capa-tipo">Activo · Defensibilidad</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 05 — Diferenciación -->
+    <div class="section">
+      <div class="section-number">05 · Diferenciación</div>
+      <div class="section-title">El moat de confianza</div>
+      <div class="section-subtitle">No competimos por funcionalidad. Competimos por confianza, y eso no se compra con capital.</div>
+
+      <div class="card">
+        <div class="resumen-texto" style="margin-bottom: 20px;">
+          Para construir un producto creíble en menstruación adolescente neurodivergente se necesita la confianza simultánea de <strong>madres, niñas, terapeutas ocupacionales, kinesiólogos, ginecólogas, neurólogos, colegios PIE, fundaciones de autismo y ministerios</strong>. Esa red de confianza es un activo intangible que tarda años en construirse y que una corporación con 100 millones de dólares no puede comprar mañana. MUN SENS opera dentro de ese ecosistema desde el día uno.
+        </div>
+
+        <div class="dif-grid">
+          <div class="dif-card">
+            <div class="dif-icon">🧠</div>
+            <div class="dif-titulo">Foco probado</div>
+            <div class="dif-desc">Único producto en LATAM dedicado específicamente a niñas neurodivergentes en menarquia. Sin competencia directa.</div>
+          </div>
+          <div class="dif-card">
+            <div class="dif-icon">👩‍⚕️</div>
+            <div class="dif-titulo">Red profesional</div>
+            <div class="dif-desc">Terapeutas ocupacionales, kinesiólogas, psicóloga infantil, ginecóloga, nutricionista. Validación clínica en cada respuesta.</div>
+          </div>
+          <div class="dif-card">
+            <div class="dif-icon">🎨</div>
+            <div class="dif-titulo">Accesibilidad nativa</div>
+            <div class="dif-desc">Pictogramas, narración por voz, paleta sensorial, anticipación. La app se diseñó para neurodivergencia desde la base, no como adaptación.</div>
+          </div>
+          <div class="dif-card">
+            <div class="dif-icon">📊</div>
+            <div class="dif-titulo">Capa de datos</div>
+            <div class="dif-desc">Primera base longitudinal en LATAM sobre menarquia neurodivergente. Activo único para política pública y alianzas.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabla competitiva -->
+      <div class="comp-tabla" style="margin-top: 20px;">
+        <div class="comp-grid">
+          <div class="comp-cell comp-header" style="text-align:left; padding-left:16px;">Capacidad</div>
+          <div class="comp-cell comp-header comp-mun" style="background: linear-gradient(135deg, var(--rosa), var(--lavanda));">MUN SENS</div>
+          <div class="comp-cell comp-header">Clue / Flo</div>
+          <div class="comp-cell comp-header">Bloomy</div>
+          <div class="comp-cell comp-header">Mi Primera Luna</div>
+          <div class="comp-cell comp-header">Apps generales</div>
+
+          <div class="comp-cell comp-row-label">Foco neurodivergencia</div>
+          <div class="comp-cell comp-mun"><span class="check">✓</span></div>
+          <div class="comp-cell"><span class="cross">✗</span></div>
+          <div class="comp-cell"><span class="cross">✗</span></div>
+          <div class="comp-cell"><span class="cross">✗</span></div>
+          <div class="comp-cell"><span class="cross">✗</span></div>
+
+          <div class="comp-cell comp-row-label">Pictogramas y accesibilidad sensorial</div>
+          <div class="comp-cell comp-mun"><span class="check">✓</span></div>
+          <div class="comp-cell"><span class="cross">✗</span></div>
+          <div class="comp-cell"><span class="cross">✗</span></div>
+          <div class="comp-cell"><span class="cross">✗</span></div>
+          <div class="comp-cell"><span class="cross">✗</span></div>
+
+          <div class="comp-cell comp-row-label">Red profesional con respuesta</div>
+          <div class="comp-cell comp-mun"><span class="check">✓</span></div>
+          <div class="comp-cell"><span class="cross">✗</span></div>
+          <div class="comp-cell"><span class="partial">~</span></div>
+          <div class="comp-cell"><span class="cross">✗</span></div>
+          <div class="comp-cell"><span class="cross">✗</span></div>
+
+          <div class="comp-cell comp-row-label">Modelo SaaS B2B / B2G</div>
+          <div class="comp-cell comp-mun"><span class="check">✓</span></div>
+          <div class="comp-cell"><span class="cross">✗</span></div>
+          <div class="comp-cell"><span class="cross">✗</span></div>
+          <div class="comp-cell"><span class="cross">✗</span></div>
+          <div class="comp-cell"><span class="cross">✗</span></div>
+
+          <div class="comp-cell comp-row-label">Capa de datos para política pública</div>
+          <div class="comp-cell comp-mun"><span class="check">✓</span></div>
+          <div class="comp-cell"><span class="cross">✗</span></div>
+          <div class="comp-cell"><span class="cross">✗</span></div>
+          <div class="comp-cell"><span class="cross">✗</span></div>
+          <div class="comp-cell"><span class="cross">✗</span></div>
+
+          <div class="comp-cell comp-row-label">Cuenta familiar tutor + niña</div>
+          <div class="comp-cell comp-mun"><span class="check">✓</span></div>
+          <div class="comp-cell"><span class="cross">✗</span></div>
+          <div class="comp-cell"><span class="cross">✗</span></div>
+          <div class="comp-cell"><span class="cross">✗</span></div>
+          <div class="comp-cell"><span class="cross">✗</span></div>
+
+          <div class="comp-cell comp-row-label">Foco primer ciclo (no tracker general)</div>
+          <div class="comp-cell comp-mun"><span class="check">✓</span></div>
+          <div class="comp-cell"><span class="cross">✗</span></div>
+          <div class="comp-cell"><span class="partial">~</span></div>
+          <div class="comp-cell"><span class="check">✓</span></div>
+          <div class="comp-cell"><span class="cross">✗</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 06 — Mercado -->
+    <div class="section">
+      <div class="section-number">06 · Mercado</div>
+      <div class="section-title">El tamaño que justifica la inversión</div>
+      <div class="section-subtitle">TAM, SAM y SOM cuantificados sobre la población femenina neurodivergente en edad de menarquia</div>
+
+      <div class="mercado-grid">
+        <div class="mercado-card">
+          <div class="mercado-tag">TAM</div>
+          <div class="mercado-numero">~3.2M</div>
+          <div class="mercado-label">niñas 9-14 años en LATAM</div>
+          <div class="mercado-desc">Población femenina hispanohablante en edad pre-menarquia y primeros años de menstruación.</div>
+        </div>
+        <div class="mercado-card sam">
+          <div class="mercado-tag">SAM</div>
+          <div class="mercado-numero">~480K</div>
+          <div class="mercado-label">con perfil neurodivergente</div>
+          <div class="mercado-desc">Estimación 15% prevalencia (TEA, TDAH, TPS, DI leve combinados) sobre la población objetivo.</div>
+        </div>
+        <div class="mercado-card som">
+          <div class="mercado-tag">SOM 5 años</div>
+          <div class="mercado-numero">~24K</div>
+          <div class="mercado-label">usuarias activas vía B2B/B2G</div>
+          <div class="mercado-desc">5% de captura del SAM en Chile, México, Colombia y Perú vía colegios PIE y municipalidades.</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 16px;">
+        <div class="resumen-texto" style="font-size: 13px;">
+          <strong>Validación del problema en Chile:</strong> el diagnóstico de TEA en menores aumentó 215% entre 2010 y 2022 según MINSAL. Existen más de <strong>1.500 colegios con Programa de Integración Escolar (PIE)</strong> y la Ley 21.545 de Autismo (2023) obliga a escuelas y servicios de salud a entregar apoyos diferenciados. <strong>El marco regulatorio convierte a MUN SENS no solo en oportunidad de mercado, sino en herramienta de cumplimiento institucional.</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- 07 — Roadmap -->
+    <div class="section">
+      <div class="section-number">07 · Roadmap</div>
+      <div class="section-title">Plan de los próximos 24 meses</div>
+      <div class="section-subtitle">Fases ejecutables con métricas concretas y mercados ordenados por dificultad de entrada</div>
+
+      <div class="roadmap-fase">
+        <div class="roadmap-fecha">Fase 1<br>Mayo–Jul 2026</div>
+        <div>
+          <div class="roadmap-titulo">Validación y reposicionamiento</div>
+          <div class="roadmap-desc">Lanzamiento de landing con waitlist, cierre de 3 LOIs con colegios PIE, contratación de 3 advisors visibles, MVP del flujo SaaS-first navegable, y entrevistas con 20 duplas tutor-niña documentadas.</div>
+          <div class="roadmap-tags">
+            <span class="roadmap-tag">100+ waitlist</span>
+            <span class="roadmap-tag">3 LOIs</span>
+            <span class="roadmap-tag">3 advisors</span>
+            <span class="roadmap-tag">MVP navegable</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-fase f2">
+        <div class="roadmap-fecha">Fase 2<br>Ago–Dic 2026</div>
+        <div>
+          <div class="roadmap-titulo">Piloto B2B en Chile</div>
+          <div class="roadmap-desc">Despliegue en 3 colegios PIE de Santiago y Concepción. 200-500 usuarias activas. Primeras métricas de retención, NPS y datos clínicos. Validación de pricing por licencia anual. Postulación a Start-Up Chile Ignite con tracción real.</div>
+          <div class="roadmap-tags">
+            <span class="roadmap-tag">3 colegios</span>
+            <span class="roadmap-tag">500 usuarias</span>
+            <span class="roadmap-tag">NPS &gt; 50</span>
+            <span class="roadmap-tag">Postulación Ignite</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-fase f3">
+        <div class="roadmap-fecha">Fase 3<br>Ene–Jul 2027</div>
+        <div>
+          <div class="roadmap-titulo">Escalamiento nacional + B2G</div>
+          <div class="roadmap-desc">15 colegios licenciados, primer convenio municipal en Biobío como mercado validador. Lanzamiento del kit premium opcional. Levantamiento de capital semilla. Primera métrica de ARR consolidada.</div>
+          <div class="roadmap-tags">
+            <span class="roadmap-tag">15 colegios</span>
+            <span class="roadmap-tag">1 municipio</span>
+            <span class="roadmap-tag">Kit premium</span>
+            <span class="roadmap-tag">Seed round</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-fase f4">
+        <div class="roadmap-fecha">Fase 4<br>Ago 2027–2028</div>
+        <div>
+          <div class="roadmap-titulo">Expansión LATAM</div>
+          <div class="roadmap-desc">Entrada a México, Colombia y Perú vía alianzas con organizaciones de autismo y educación especial. Internacionalización digital primero, kit después. Capa de datos consolidada como activo defensivo.</div>
+          <div class="roadmap-tags">
+            <span class="roadmap-tag">3 países</span>
+            <span class="roadmap-tag">ARR 10x</span>
+            <span class="roadmap-tag">Data layer activa</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 08 — Equipo -->
+    <div class="section">
+      <div class="section-number">08 · Equipo</div>
+      <div class="section-title">Quiénes construyen MUN SENS</div>
+      <div class="section-subtitle">Fundadoras + advisors comprometidos + perfiles por sumar para dimensionar el modelo</div>
+
+      <div class="equipo-grid">
+        <div class="persona-card">
+          <div class="persona-rol">Fundadora · CEO</div>
+          <div class="persona-nombre">Josefa Fica Ávila</div>
+          <div class="persona-bio">Creadora del concepto MUN. Liderazgo estratégico, posicionamiento de marca, relacionamiento con ecosistema clínico y educativo. 100% de dedicación. San Pedro de la Paz.</div>
+        </div>
+        <div class="persona-card">
+          <div class="persona-rol">Cofundador · CTO</div>
+          <div class="persona-nombre">Ariel Aceval Bustos</div>
+          <div class="persona-bio">15+ años en desarrollo de software. Stack Ionic/Angular, Node.js, AWS, microservicios. Arquitectura escalable y seguridad. Liderazgo técnico full-stack y cloud-native.</div>
+        </div>
+        <div class="persona-card advisor">
+          <div class="persona-rol">Advisor · Salud pélvica</div>
+          <div class="persona-nombre">Master en Piso Pélvico</div>
+          <div class="persona-bio">Kinesióloga especialista. Validación clínica del contenido educativo, autora de la serie audiovisual "Conoce tu cuerpo" en la app. Primera advisor confirmada.</div>
+        </div>
+        <div class="persona-card por-sumar">
+          <div class="persona-rol">Por sumar · Q2 2026</div>
+          <div class="persona-nombre">Advisor en neurodivergencia</div>
+          <div class="persona-bio">Terapeuta ocupacional o psicóloga con experiencia en TEA y TDAH. Validación de la línea SENS y representación clínica en colegios PIE.</div>
+        </div>
+        <div class="persona-card por-sumar">
+          <div class="persona-rol">Por sumar · Q2 2026</div>
+          <div class="persona-nombre">Advisor en growth femtech</div>
+          <div class="persona-bio">Profesional con track record en SaaS, startup latam o femtech. Aporta validación de modelo y red para levantamiento de capital.</div>
+        </div>
+        <div class="persona-card por-sumar">
+          <div class="persona-rol">Por sumar · Q3 2026</div>
+          <div class="persona-nombre">Lead Comercial B2B</div>
+          <div class="persona-bio">Perfil con experiencia en venta a colegios o salud institucional. Dedicación 50% inicial, escalable a tiempo completo en Fase 2.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 09 — Métricas -->
+    <div class="section">
+      <div class="section-number">09 · Métricas tempranas</div>
+      <div class="section-title">Lo que tendremos antes de repostular</div>
+      <div class="section-subtitle">Evidencia concreta para responder a Start-Up Chile la próxima ronda</div>
+
+      <div class="metricas-grid">
+        <div class="metrica-card">
+          <div class="metrica-numero">100+</div>
+          <div class="metrica-label">Waitlist</div>
+          <div class="metrica-detalle">Madres y cuidadoras registradas vía landing y campañas de Instagram.</div>
+        </div>
+        <div class="metrica-card">
+          <div class="metrica-numero">3</div>
+          <div class="metrica-label">LOIs colegios PIE</div>
+          <div class="metrica-detalle">Cartas de intención firmadas con colegios privados de Santiago y Concepción.</div>
+        </div>
+        <div class="metrica-card">
+          <div class="metrica-numero">20</div>
+          <div class="metrica-label">Entrevistas tutor-niña</div>
+          <div class="metrica-detalle">Validación cualitativa documentada con familias reales del segmento.</div>
+        </div>
+        <div class="metrica-card">
+          <div class="metrica-numero">3</div>
+          <div class="metrica-label">Advisors comprometidos</div>
+          <div class="metrica-detalle">Salud pélvica, neurodivergencia y growth femtech con nombre y firma.</div>
+        </div>
+        <div class="metrica-card">
+          <div class="metrica-numero">1</div>
+          <div class="metrica-label">Marca registrada</div>
+          <div class="metrica-detalle">Registro de marca MUN en INAPI bajo MUN SENS SPA.</div>
+        </div>
+        <div class="metrica-card">
+          <div class="metrica-numero">v3</div>
+          <div class="metrica-label">Prototipo navegable</div>
+          <div class="metrica-detalle">Flujo SaaS-first con onboarding institucional, modos visibles y red profesional.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10 — Cierre -->
+    <div class="section">
+      <div class="section-number">10 · Cierre</div>
+      <div class="section-title">Por qué este reposicionamiento es el correcto</div>
+
+      <div class="card">
+        <div class="resumen-texto" style="font-size: 14px;">
+          <p style="margin-bottom: 14px;">El feedback del comité fue claro y es <strong>solucionable</strong>. No nos rechazaron por mala idea, mala tecnología o mal mercado. Nos rechazaron por una narrativa que sonaba a proyecto social cuando podía sonar a infraestructura tecnológica escalable. La diferencia no es del producto, es del lenguaje y del modelo.</p>
+
+          <p style="margin-bottom: 14px;">La transición de <strong>ALLE FIC SOC LTDA</strong> a <strong>MUN SENS SPA</strong> no es solo administrativa. Es un acto de foco. Estamos eligiendo un nicho específico y defendible (niñas neurodivergentes en menarquia) sobre uno amplio y disperso (todas las niñas). En etapas tempranas, el foco vale más que el alcance.</p>
+
+          <p style="margin-bottom: 14px;">El cambio de <strong>kit-first a SaaS-first</strong> resuelve simultáneamente las cinco notas bajas: escalabilidad sube porque el costo marginal cae a cero, estrategia de crecimiento sube porque el canal institucional es ordenado, producto sube porque la diferenciación es nítida, equipo sube porque el modelo es viable con dos personas más advisors, y tracción sube porque podemos validar con tres LOIs antes que con cien kits vendidos.</p>
+
+          <p style="margin-bottom: 14px;">El kit no desaparece: pasa a ser <strong>producto premium opcional curado por datos</strong>, lo que mejora margen, reduce inventario y mantiene el ritual emocional para las familias que lo quieran.</p>
+
+          <p>La identidad construida en el ecosistema clínico-educativo de neurodivergencia es nuestro activo más difícil de copiar. Es el moat de confianza, y vale más que cualquier feature replicable.</p>
+        </div>
+      </div>
+
+      <div class="quote-box" style="margin-top: 20px; background: linear-gradient(135deg, #f0faf8, #fff); border-left-color: var(--teal);">
+        <div class="quote-text">
+          MUN SENS no compite por funcionalidad. Compite por confianza. Y la confianza en salud adolescente neurodivergente no se compra con capital: se construye con la red de profesionales y familias que ya validaron el producto.
+        </div>
+        <div class="quote-author" style="color: var(--teal);">— Tesis central · MUN SENS SPA · 2026</div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="footer-logo">M<span>☽</span>N</div>
+      <div class="footer-tagline">Nuestro primer ciclo</div>
+      <div class="footer-text">
+        <strong>MUN SENS SPA</strong> · RUT 78318289-0<br>
+        Propuesta estratégica de reposicionamiento · Mayo 2026<br>
+        Josefa Fica Ávila · josefa@fica.cl · @mun_sens
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
