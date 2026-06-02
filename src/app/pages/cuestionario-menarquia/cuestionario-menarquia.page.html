@@ -1,0 +1,177 @@
+<ion-content [fullscreen]="true">
+  <div class="page-wrapper">
+
+    <!-- Manchas acuarela SVG -->
+    <svg class="watercolor-svg" xmlns="http://www.w3.org/2000/svg"
+         viewBox="0 0 390 700" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <filter id="wcq1" x="-30%" y="-30%" width="160%" height="160%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.035"
+                        numOctaves="5" seed="7" result="noise"/>
+          <feDisplacementMap in="SourceGraphic" in2="noise"
+                             scale="20" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+        <filter id="wcq2" x="-30%" y="-30%" width="160%" height="160%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.04"
+                        numOctaves="4" seed="12" result="noise"/>
+          <feDisplacementMap in="SourceGraphic" in2="noise"
+                             scale="16" xChannelSelector="G" yChannelSelector="R"/>
+        </filter>
+      </defs>
+      <ellipse class="blob-anim blob-1"
+               cx="360" cy="-10" rx="180" ry="150"
+               fill="#c8b8e8" opacity="0.5" filter="url(#wcq1)"/>
+      <ellipse class="blob-anim blob-2"
+               cx="-20" cy="650" rx="170" ry="140"
+               fill="#f5c5d0" opacity="0.45" filter="url(#wcq2)"/>
+    </svg>
+
+    <div class="content">
+
+      <!-- ===== ESTADO: RESUME PROMPT ===== -->
+      <ng-container *ngIf="state === 'resume-prompt'">
+        <div class="resume-screen">
+          <img src="assets/avatars/muni-avatar.png" class="muni-avatar-lg" alt="Muni"/>
+          <div class="muni-bubble resume-bubble">
+            ¡Hola de nuevo! Tienes el cuestionario a medias. ¿Seguimos donde lo dejamos? 💜
+          </div>
+          <h2 class="step-title">¿Continuamos?</h2>
+          <p class="resume-text">Tu progreso está guardado.</p>
+        </div>
+      </ng-container>
+
+      <!-- ===== ESTADO: RESPONDIENDO ===== -->
+      <ng-container *ngIf="state === 'answering'">
+
+        <!-- Cabecera: atrás + progreso + salir -->
+        <div class="header-bar">
+          <button class="back-btn" (click)="back()">←</button>
+          <div class="progress-segments">
+            <div *ngFor="let seg of blockSegments; let i = index"
+                 class="progress-seg"
+                 [class.seg-active]="seg > 0">
+              <div class="progress-seg-fill" [style.width.%]="seg"></div>
+            </div>
+          </div>
+          <button class="exit-btn" (click)="exitAndSave()">Salir</button>
+        </div>
+
+        <!-- Indicador de pregunta -->
+        <p *ngIf="currentStep.type === 'question'" class="question-counter">
+          Pregunta {{ currentQuestionId }} de 20
+        </p>
+
+        <!-- Avatar Muni con burbuja -->
+        <div class="muni-row">
+          <img src="assets/avatars/muni-avatar.png" class="muni-avatar" alt="Muni"/>
+          <div class="muni-bubble">{{ muniMessage }}</div>
+        </div>
+
+        <!-- ===== TRANSICIÓN FIN DE BLOQUE ===== -->
+        <div *ngIf="currentStep.type === 'block-end'" class="block-end-screen">
+          <div class="block-end-icon">{{ blockEndEmoji }}</div>
+          <p class="block-end-block-name">{{ blockEndBlockName }}</p>
+          <h2 class="step-title">¡Bloque completado!</h2>
+          <p class="block-end-desc">{{ blockEndSubtitle }}</p>
+        </div>
+
+        <!-- ===== PANTALLA DE FINALIZACIÓN ===== -->
+        <div *ngIf="currentStep.type === 'complete'" class="complete-screen">
+          <div class="complete-icon">🎊</div>
+          <h2 class="step-title">¡Cuestionario completo!</h2>
+          <p class="complete-desc">
+            Gracias por contarme todo esto.<br/>
+            Tu información nos ayuda a mejorar MUN para ti 💜
+          </p>
+          <button class="continuar-btn complete-btn" (click)="finish()">
+            ¡Ir a Mi Ciclo! →
+          </button>
+        </div>
+
+        <!-- ===== PREGUNTAS ===== -->
+        <ng-container *ngIf="currentStep.type === 'question'">
+
+          <h2 class="question-title">{{ currentQuestion?.text }}</h2>
+
+          <!-- Selección única -->
+          <div *ngIf="currentQuestion?.type === 'single'" class="options-list">
+            <button *ngFor="let opt of stringOptions"
+              class="option-btn"
+              [class.selected]="isSelected(currentQuestionId, opt)"
+              (click)="setAnswer(currentQuestionId, opt)">
+              {{ opt }}
+            </button>
+          </div>
+
+          <!-- Selección múltiple -->
+          <div *ngIf="currentQuestion?.type === 'multi'" class="options-list">
+            <p class="multi-hint">Puedes elegir más de una opción</p>
+            <button *ngFor="let opt of stringOptions"
+              class="option-btn option-multi"
+              [class.selected]="isMultiSelected(currentQuestionId, opt)"
+              (click)="toggleMulti(currentQuestionId, opt)">
+              <span>{{ opt }}</span>
+              <span *ngIf="isMultiSelected(currentQuestionId, opt)" class="check-mark">✓</span>
+            </button>
+          </div>
+
+          <!-- Selector numérico (Q8) -->
+          <div *ngIf="currentQuestion?.type === 'numeric'" class="age-section">
+            <div class="age-grid">
+              <button *ngFor="let age of ages"
+                class="age-btn"
+                [class.selected]="isSelected(currentQuestionId, age)"
+                (click)="setAnswer(currentQuestionId, age)">
+                {{ age }}
+              </button>
+            </div>
+            <button class="option-btn no-period-btn"
+              [class.selected]="isSelected(currentQuestionId, 'Todavía no me ha llegado')"
+              (click)="setAnswer(currentQuestionId, 'Todavía no me ha llegado')">
+              Todavía no me ha llegado
+            </button>
+          </div>
+
+          <!-- Selección visual (Q12) -->
+          <div *ngIf="currentQuestion?.type === 'visual'" class="visual-options">
+            <button *ngFor="let opt of visualOptions"
+              class="visual-btn"
+              [class.selected]="isSelected(currentQuestionId, opt.label)"
+              (click)="setAnswer(currentQuestionId, opt.label)">
+              <span class="visual-emoji">{{ opt.emoji }}</span>
+              <span class="visual-label">{{ opt.label }}</span>
+              <span class="visual-desc">{{ opt.description }}</span>
+            </button>
+          </div>
+
+        </ng-container>
+      </ng-container>
+    </div>
+
+    <!-- ===== PIE DE PÁGINA ===== -->
+    <div class="footer-btn">
+
+      <!-- Botones del prompt de reanudación -->
+      <ng-container *ngIf="state === 'resume-prompt'">
+        <button class="continuar-btn" (click)="resumeProgress()">
+          Continuar donde lo dejé
+        </button>
+        <button class="secondary-btn" (click)="startFresh()">
+          Empezar de nuevo
+        </button>
+      </ng-container>
+
+      <!-- Botón siguiente (durante el cuestionario) -->
+      <ng-container *ngIf="state === 'answering' && currentStep.type !== 'complete'">
+        <button class="continuar-btn"
+          [disabled]="!canGoNext"
+          [class.btn-disabled]="!canGoNext"
+          (click)="next()">
+          {{ nextLabel }}
+        </button>
+      </ng-container>
+
+    </div>
+
+  </div>
+</ion-content>

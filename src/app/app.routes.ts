@@ -21,6 +21,11 @@ export const routes: Routes = [
       import('./pages/onboarding/onboarding-cuidador/onboarding-cuidador.page').then((m) => m.OnboardingCuidadorPage),
   },
   {
+    path: 'cuestionario-menarquia',
+    loadComponent: () =>
+      import('./pages/cuestionario-menarquia/cuestionario-menarquia.page').then((m) => m.CuestionarioMenarquiaPage),
+  },
+  {
     path: 'tabs-nina',
     loadComponent: () =>
       import('./pages/tabs-nina/tabs-nina.page').then((m) => m.TabsNinaPage),

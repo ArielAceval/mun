@@ -85,6 +85,6 @@ export class OnboardingNinaPage {
       estiloVida: this.estiloVida,
       productos: this.productos,
     }));
-    this.router.navigate(['/tabs-nina/home']);
+    this.router.navigate(['/cuestionario-menarquia']);
   }
 }
